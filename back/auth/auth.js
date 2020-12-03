@@ -15,14 +15,14 @@ app.post('/signin', (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password)
-        return res.status(500).json({ message: 'Required data is not provided' });
+        return res.status(500).json('Required data is not provided');
 
     axios.post(`${ dbService }/signin`, { email })
         .then(result => {
             const user = result.data;
 
             if (!bcrypt.compareSync(password, user.password))
-                return res.status(401).json({ message: 'Incorrect password' });
+                return res.status(401).json('Incorrect password');
 
             const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: '7d' });
             delete user.password;
@@ -30,8 +30,7 @@ app.post('/signin', (req, res) => {
             return res.status(200).json(user);
         })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({ message: err.response.data });
+            return res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 
@@ -40,15 +39,15 @@ app.post('/signup', (req, res) => {
     const { password } = req.body;
 
     if (!password)
-        return res.status(500).json({ message: 'Required data is not provided' });
+        return res.status(400).json('Required data is not provided');
 
     const user = { ...req.body, password: bcrypt.hashSync(password, saltRounds) };
     axios.post(`${ dbService }/signup`, user)
         .then(response => {
-            return res.status(200).json({ message: response.data });
+            return res.status(200).json(response.data);
         })
         .catch(err => {
-            return res.status(500).json({ message: err });
+            return res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 

@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+.register {
+    padding-top: 12%;
+}
+
+.register-card {
+    width: 350px;
+    margin: 0 auto;
+
+    .header {
+        margin: 20px 0 15px 0;
+    }
+
+    button {
+        margin: 10px;
+    }
+
+    a {
+        color: white;
+        font-size: 11px;
+        padding: 10px;
+    }
+}
+
+mat-form-field {
+    width: 80%;
+}

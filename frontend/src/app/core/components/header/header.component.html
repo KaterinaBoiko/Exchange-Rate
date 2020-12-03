@@ -1,0 +1,22 @@
+<div class="flex-center align-center" [class.space-between]="isAuthenticated">
+    <div class="logo" routerLink="/home">
+        <mat-icon>trending_up</mat-icon>Exchange rates
+    </div>
+
+    <button *ngIf="user" mat-button [matMenuTriggerFor]="userMenu">
+        {{ user.login }}
+        <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+</div>
+
+<mat-menu #userMenu="matMenu" xPosition="before">
+    <button mat-menu-item routerLink="/playlists">
+        <mat-icon>trending_up</mat-icon>Playlists
+    </button>
+    <button mat-menu-item routerLink="/profile">
+        <mat-icon>person</mat-icon>Profile
+    </button>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>Logout
+    </button>
+</mat-menu>

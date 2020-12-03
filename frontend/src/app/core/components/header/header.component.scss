@@ -1,0 +1,13 @@
+@import '../../../../assets/styles/global.scss';
+
+:host {
+    display: block;
+    height: 59px;
+    background-color: $dark;
+    border-bottom: 1px solid $main;
+    padding: 0 20px;
+
+    &>div {
+        height: 100%;
+    }
+}

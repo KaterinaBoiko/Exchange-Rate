@@ -18,7 +18,7 @@ app.get('/privat-rates', (req, res) => {
         });
 });
 
-setPrivatCurrencyByDate('26.11.2020');
+setPrivatCurrencyByDate('1.12.2020');
 
 function setPrivatCurrencyByDate(date) {
     axios.get(`https://api.privatbank.ua/p24api/exchange_rates?json&date=${ date }`)
