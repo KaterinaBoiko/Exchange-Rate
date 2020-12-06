@@ -45,6 +45,18 @@ app.get('/rate/:date', (req, res) => {
         });
 });
 
+app.get('/details/:currency', (req, res) => {
+    const { currency } = req.params;
+
+    axios.get(`${ ratesService }/details/${ currency }`, { params: req.query })
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+        });
+});
+
 app.get('/currency-pairs', (req, res) => {
     axios.get(`${ ratesService }/currency-pairs`)
         .then(response => {

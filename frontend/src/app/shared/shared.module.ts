@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ToastrModule } from 'ngx-toastr';
+import { ChartsModule } from 'ng2-charts';
 
 import { MaterialModule } from './app-material-design';
 
@@ -16,14 +17,16 @@ import { MaterialModule } from './app-material-design';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ChartsModule
   ],
   exports: [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    ToastrModule
+    ToastrModule,
+    ChartsModule
   ]
 })
 export class SharedModule { }

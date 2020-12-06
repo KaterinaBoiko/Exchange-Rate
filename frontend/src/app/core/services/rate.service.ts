@@ -31,6 +31,17 @@ export class RateService {
       `${this.apiUrl}/current-nbu-rate`);
   }
 
+  getCurrencyDetails(currency: string, dateFrom?: string, dateTo?: string): Observable<any> {
+    let params = new HttpParams();
+    if (dateFrom)
+      params = params.append('from', dateFrom);
+    if (dateTo)
+      params = params.append('to', dateTo);
+
+    return this.http.get(
+      `${this.apiUrl}/details/${currency}`, { params });
+  }
+
   convert(amount: number, currency: string, base_currency: string): Observable<any> {
     const params = new HttpParams()
       .append('amount', amount.toString())

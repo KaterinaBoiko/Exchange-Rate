@@ -49,15 +49,15 @@ export class ConverterComponent implements OnInit {
         data => {
           this.baseCurrencies.push({ code: data[0].base_currency, title: data[0].base_currency_title });
           this.selectedBaseCurrency = this.baseCurrencies[0];
-          this.currencies = data.map(item => {
-            return { code: item.currency, title: item.currency_title };
-          });
+          this.currencies = data
+            .map(item => {
+              return { code: item.currency, title: item.currency_title };
+            })
+            .sort((a, b) => a.code === 'USD' ? -1 : a.code === 'EUR' ? -1 : a.code.localeCompare(b.code));
 
-          this.selectedCurrency = this.currencies.find(x => x.code === 'USD');
+          this.selectedCurrency = this.currencies[0];
           this.amount = 10;
           this.showLoader = false;
-
-          console.log(this.currencies);
         },
         error => {
           console.log(error);

@@ -50,6 +50,28 @@ app.get('/rate/:date', (req, res) => {
     });
 });
 
+app.get('/details/:currency', (req, res) => {
+    const { currency } = req.params;
+    sql.query(`select * from currencies where code = '${ currency }'`, (err, data) => {
+        if (err)
+            return res.status(500).json(err.mesage);
+
+        return res.status(200).json(data.rows[ 0 ]);
+    });
+});
+
+app.get('/interval-rates/:currency', (req, res) => {
+    const { currency } = req.params;
+    const { from, to } = req.query;
+
+    sql.query(`select * from exchange_rates where currency_pair_id = (select id from currency_pairs where base_currency = 'UAH' and currency = '${ currency }') and date >= '${ from }' and date < '${ to }'`, (err, data) => {
+        if (err)
+            return res.status(500).json(err);
+
+        return res.status(200).json(data.rows);
+    });
+});
+
 app.get('/currency-pairs', (req, res) => {
     sql.query(`select pairs.base_currency, pairs.currency, ` +
         `(select title from currencies where code = pairs.currency) currency_title, ` +

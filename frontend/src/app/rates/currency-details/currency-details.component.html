@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <mat-spinner *ngIf="showLoader" class="spinner" diameter="40"></mat-spinner>
+
+    <div class="title" *ngIf="details">
+        <span class="code">{{details.code}}</span>
+        <span> - {{details.title}}</span>
+        <span *ngIf="details.ukr_title"> - {{details.ukr_title}}</span>
+    </div>
+
+    <div *ngIf="chartDetails" class="chart">
+        <canvas baseChart [chartType]="chartDetails.type" [height]="200" [colors]="colors"
+            [datasets]="chartDetails.datasets" [labels]="chartDetails.labels" [options]="chartDetails.options">
+        </canvas>
+    </div>
+
+    <p class="no-data" *ngIf="noData && !showLoader">No data for chart</p>
+</div>

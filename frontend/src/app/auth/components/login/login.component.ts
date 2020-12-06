@@ -56,8 +56,7 @@ export class LoginComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(
           user => {
-            console.log(user);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/rates']);
             this.authService.setCurrentUser(user);
           },
           error => {

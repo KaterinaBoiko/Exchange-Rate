@@ -9,12 +9,14 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './rates/home/home.component';
 import { ConverterComponent } from './rates/converter/converter.component';
+import { CurrencyDetailsComponent } from './rates/currency-details/currency-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ConverterComponent
+    ConverterComponent,
+    CurrencyDetailsComponent
   ],
   imports: [
     BrowserModule,

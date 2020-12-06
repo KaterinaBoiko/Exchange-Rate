@@ -14,12 +14,25 @@
 
 table {
     min-width: 100%;
+    box-shadow: none;
 }
 
 .mat-header-cell,
 .mat-cell {
     padding: 0 25px ;
     text-align: center;
+
+    a {
+        color: white;
+    }
+}
+
+.today {
+    color: white;
+    text-decoration: underline;
+    font-size: 14px;
+    padding: 0 10px;
+    cursor: pointer;
 }
 
 .home ::ng-deep .mat-form-field {

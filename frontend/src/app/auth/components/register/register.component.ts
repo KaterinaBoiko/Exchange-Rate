@@ -70,7 +70,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(
           response => {
-            console.log(response);
             this.showSuccess('User was created');
             this.router.navigate(['/login']);
           },

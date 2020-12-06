@@ -76,6 +76,38 @@ app.get('/current-nbu-rate', (req, res) => {
         });
 });
 
+app.get('/details/:currency', (req, res) => {
+    const { currency } = req.params;
+
+    axios.get(`${ dbService }/details/${ currency }`)
+        .then(response => {
+            const answer = response.data;
+            let { from, to } = req.query;
+            if (!from) {
+                from = new Date();
+                from.setDate(from.getDate() - 7);
+            }
+            if (!to) {
+                to = new Date();
+            }
+            const params = {
+                from: formatDate(from, "dd.m.yyyy"),
+                to: formatDate(to, "dd.m.yyyy")
+            };
+            axios.get(`${ dbService }/interval-rates/${ currency }`, { params })
+                .then(response => {
+                    answer.data = response.data;
+                    res.status(200).json(answer);
+                })
+                .catch(err => {
+                    res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+                });
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+        });
+});
+
 function setPrivatRateByDate(date) {
     return axios.get(`https://api.privatbank.ua/p24api/exchange_rates?json&date=${ date }`)
         .then(response => {
