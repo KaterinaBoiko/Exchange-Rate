@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
-    private rateService: RateService,
+    private rateService: RateService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
-    console.log(event.value);
     this.getRateByDate(event.value);
   }
 

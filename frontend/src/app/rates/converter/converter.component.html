@@ -1,1 +1,62 @@
-<p>converter works!</p>
+<div class="wrapper">
+    <p class="title">
+        Convert Ukrainian Hryvnia
+    </p>
+
+    <div class="inputs space-evenly align-center">
+        <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" [(ngModel)]="amount" (change)="convert()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>From</mat-label>
+            <mat-select [(ngModel)]="selectedCurrency" (selectionChange)="convert()">
+                <mat-select-trigger>
+                    <p class="code">{{selectedCurrency?.code}}</p>
+                    <p class="title">{{selectedCurrency?.title}}</p>
+                </mat-select-trigger>
+                <mat-option *ngFor="let currency of currencies" [value]="currency">
+                    {{currency.code}} - {{currency.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-icon class="icon" (click)="swapCurrencies()">swap_horiz</mat-icon>
+
+        <mat-form-field appearance="outline">
+            <mat-label>To</mat-label>
+            <mat-select [(ngModel)]="selectedBaseCurrency" (selectionChange)="convert()">
+                <mat-select-trigger>
+                    <p class="code">{{selectedBaseCurrency?.code}}</p>
+                    <p class="title">{{selectedBaseCurrency?.title}}</p>
+                </mat-select-trigger>
+                <mat-option *ngFor="let currency of baseCurrencies" [value]="currency">
+                    {{currency.code}} - {{currency.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-button (click)="convert()">
+            <mat-icon class="icon">send</mat-icon>
+        </button>
+    </div>
+
+    <mat-spinner *ngIf="showLoader" diameter="40" class="spinner"></mat-spinner>
+
+    <div class="results" *ngIf="!showLoader && this.totalAmount">
+        <div class="left-side">
+            {{ this.amountCopy }} <span class="code">{{this.selectedCurrency.code}}</span> =
+        </div>
+        <div class="total-amount">
+            {{this.totalAmount | number:'0.1-5' }} <span class="code">{{this.selectedBaseCurrency.code}}</span>
+        </div>
+
+        <div class="additional">
+            <p>1 {{this.selectedBaseCurrency.code}} = {{this.revertedRateNBU | number:'0.1-5' }}
+                {{this.selectedCurrency.code}}</p>
+            <p>1 {{this.selectedCurrency.code}} = {{this.rateNBU | number:'0.1-5' }} {{this.selectedBaseCurrency.code}}
+            </p>
+        </div>
+    </div>
+</div>

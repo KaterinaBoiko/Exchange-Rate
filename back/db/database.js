@@ -50,6 +50,49 @@ app.get('/rate/:date', (req, res) => {
     });
 });
 
+app.get('/currency-pairs', (req, res) => {
+    sql.query(`select pairs.base_currency, pairs.currency, ` +
+        `(select title from currencies where code = pairs.currency) currency_title, ` +
+        `(select title from currencies where code = pairs.base_currency) base_currency_title from currency_pairs pairs`, (err, data) => {
+            if (err)
+                return res.status(500).json(err.mesage);
+
+            return res.status(200).json(data.rows);
+        });
+});
+
+app.get('/get-nbu-rate', (req, res) => {
+    const { currency, base_currency, date } = req.query;
+
+    sql.query(`select id, base_currency from currency_pairs where base_currency='${ base_currency }' and currency = '${ currency }' ` +
+        `or base_currency='${ currency }' and currency = '${ base_currency }'`, (err, result) => {
+            if (err)
+                return res.status(500).json(err.mesage);
+
+            const { id, base_currency } = result.rows[ 0 ];
+            sql.query(`select rate_nb from exchange_rates where currency_pair_id = ${ id } and date = '${ date }'`, (err, result) => {
+                if (err)
+                    return res.status(500).json(err);
+
+                const { rate_nb } = result.rows[ 0 ];
+                return res.status(200).json({ rate_nb, base_currency });
+            });
+        });
+});
+
+app.get('/nbu-rate/:date', (req, res) => {
+    const { date } = req.params;
+    sql.query(`select pairs.base_currency, pairs.currency, rates.rate_nb from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${ date }' and rates.rate_nb is not null`, (err, data) => {
+        if (err)
+            return res.status(500).json(err.mesage);
+
+        if (!data.rowCount)
+            return res.status(204).json(data.rows);
+
+        return res.status(200).json(data.rows);
+    });
+});
+
 app.post('/set-privat-rates', (req, res) => {
     const data = req.body;
     data.forEach(pair => {

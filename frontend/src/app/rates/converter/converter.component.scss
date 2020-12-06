@@ -1,0 +1,82 @@
+@import '../../../assets/styles/global.scss';
+
+:host {
+    display: block;
+    height: calc(100% - 120px);
+    background-color: $bg-color;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 70%;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 900;
+    margin: 0;
+    padding-top: 30px;
+    color: white;
+}
+
+.inputs {
+    margin: 50px 0;
+
+    button {
+        margin-left: 20px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .title {
+        font-weight: normal;
+        font-size: 12px;
+        color: rgb(177, 177, 177);
+        padding-top: 2px;
+    }
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.inputs ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+
+.spinner {
+    margin: 20px auto;
+}
+
+.results {
+    text-align: center;
+    color: white;
+    margin: 50px 0;
+
+    .code {
+        color: $main;
+    }
+
+    .left-side {
+        display: inline-block;
+        font-size: 40px;
+    }
+
+    .total-amount {
+        display: inline-block;
+        font-size: 50px;
+        font-weight: 900;
+        margin-left: 10px;
+    }
+
+    .additional {
+        font-size: 18px;
+        margin-top: 40px;
+
+        p {
+            margin: 5px 0;
+        }
+    }
+}

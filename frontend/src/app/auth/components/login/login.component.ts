@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value)
+        .pipe(takeUntil(this.unsubscribe))
         .subscribe(
           user => {
             console.log(user);

@@ -41,6 +41,10 @@ $dark: #212121;
     margin: 0 auto;
 }
 
+.icon {
+    color: white;
+}
+
 .logo,
 .header {
     font-size: 19px;
@@ -75,6 +79,19 @@ $dark: #212121;
 }
 
 //Mat form
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: $main;
+}
+
+input.mat-input-element {
+    color: white;
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: white;
+}
+
 .mat-form-field.mat-focused .mat-form-field-label {
     color: white !important;
 }

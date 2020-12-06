@@ -26,11 +26,9 @@ app.post('/signin', (req, res) => {
 app.post('/signup', (req, res) => {
     axios.post(`${ authService }/signup`, req.body)
         .then(response => {
-            console.log(response.data);
             res.status(200).json({ message: response.data });
         })
         .catch(err => {
-            console.log(err.response);
             res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
         });
 });
@@ -43,7 +41,36 @@ app.get('/rate/:date', (req, res) => {
             res.status(200).json(response.data);
         })
         .catch(err => {
-            console.log(err);
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+        });
+});
+
+app.get('/currency-pairs', (req, res) => {
+    axios.get(`${ ratesService }/currency-pairs`)
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+        });
+});
+
+app.get('/convert', (req, res) => {
+    axios.get(`${ ratesService }/convert`, { params: req.query })
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+        });
+});
+
+app.get('/current-nbu-rate', (req, res) => {
+    axios.get(`${ ratesService }/current-nbu-rate`)
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
             res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
