@@ -25,13 +25,29 @@ app.post('/signin', (req, res) => {
 
 app.post('/signup', (req, res) => {
     const { username, email, password, address } = req.body;
-    sql.query(`INSERT INTO USERS (${ username ? 'username, ' : '' }email, password${ address ? ', address' : '' })`
-        + ` VALUES (${ username ? `'${ username }', ` : '' }'${ email }', '${ password }'${ address ? `, '${ address }'` : '' })`, (err) => {
-            if (err)
-                return res.status(500).json(err.mesage);
+    sql.query(`insert into users (${ username ? 'username, ' : '' }email, password${ address ? ', address' : '' })`
+        + ` values (${ username ? `'${ username }', ` : '' }'${ email }', '${ password }'${ address ? `, '${ address }'` : '' })`, (err) => {
+            if (err) {
+                if (err.code == 23505)
+                    return res.status(409).json('Email is already exist');
+                return res.status(500).json(err.detail);
+            }
 
             return res.status(200).json('success');
         });
+});
+
+app.get('/rate/:date', (req, res) => {
+    const { date } = req.params;
+    sql.query(`select rates.*, pairs.currency from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${ date }' and rates.sale_privat is not null`, (err, data) => {
+        if (err)
+            return res.status(500).json(err.mesage);
+
+        if (!data.rowCount)
+            return res.status(204).json(data.rows);
+
+        return res.status(200).json(data.rows);
+    });
 });
 
 app.post('/set-privat-rates', (req, res) => {
@@ -43,10 +59,11 @@ app.post('/set-privat-rates', (req, res) => {
                 if (err || !result.rowCount)
                     return;
 
-                sql.query(`INSERT INTO exchange_rates (currency_pair_id, rate_nb, sale_privat, purchase_privat, date) Values ( ${ result.rows[ 0 ].id }, ${ rate_nb ? rate_nb : 'null' }, ${ sale_privat ? sale_privat : 'null' }, ${ purchase_privat ? purchase_privat : 'null' }, '${ date }')`, (err) => {
-                    if (err)
-                        return console.log(err);
-                });
+                sql.query(`INSERT INTO exchange_rates (currency_pair_id, rate_nb, sale_privat, purchase_privat, date)` +
+                    `values (${ result.rows[ 0 ].id }, ${ rate_nb ? rate_nb : 'null' }, ${ sale_privat ? sale_privat : 'null' }, ${ purchase_privat ? purchase_privat : 'null' }, '${ date }') on conflict do nothing`, (err) => {
+                        if (err)
+                            return console.log(err);
+                    });
             });
         };
     });

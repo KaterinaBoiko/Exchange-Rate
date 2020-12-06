@@ -11,3 +11,23 @@
         height: 100%;
     }
 }
+
+.logo {
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.login {
+    color: white;
+    cursor: pointer;
+}
+
+.menu a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    border-left: 1px solid white;
+    padding-left: 15px;
+    font-size: 14px;
+}

@@ -7,10 +7,14 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
+import { HomeComponent } from './rates/home/home.component';
+import { ConverterComponent } from './rates/converter/converter.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    ConverterComponent
   ],
   imports: [
     BrowserModule,

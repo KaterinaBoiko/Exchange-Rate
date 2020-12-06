@@ -7,6 +7,7 @@ const axios = require('axios');
 const privatService = 'http://localhost:3001';
 const dbService = 'http://localhost:3003';
 const authService = 'http://localhost:3005';
+const ratesService = 'http://localhost:3007';
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,10 +26,25 @@ app.post('/signin', (req, res) => {
 app.post('/signup', (req, res) => {
     axios.post(`${ authService }/signup`, req.body)
         .then(response => {
-            res.status(200).send(response.data);
+            console.log(response.data);
+            res.status(200).json({ message: response.data });
         })
         .catch(err => {
+            console.log(err.response);
             res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
+        });
+});
+
+app.get('/rate/:date', (req, res) => {
+    const { date } = req.params;
+
+    axios.get(`${ ratesService }/rate/${ date }`)
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 

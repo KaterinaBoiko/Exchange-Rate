@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { SongService } from '../../services/song.service';
 import { Song } from '../../../shared/classes/song';
 import { AuthService } from '../../services/auth.service';
 
@@ -18,7 +17,6 @@ export class FooterComponent implements OnInit {
   isAuthenticated: boolean = false;
 
   constructor(
-    private songService: SongService,
     private authService: AuthService
   ) { }
 

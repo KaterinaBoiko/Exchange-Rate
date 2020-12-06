@@ -27,10 +27,10 @@ app.post('/signin', (req, res) => {
             const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: '7d' });
             delete user.password;
             user.token = token;
-            return res.status(200).json(user);
+            res.status(200).json(user);
         })
         .catch(err => {
-            return res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 
@@ -44,10 +44,10 @@ app.post('/signup', (req, res) => {
     const user = { ...req.body, password: bcrypt.hashSync(password, saltRounds) };
     axios.post(`${ dbService }/signup`, user)
         .then(response => {
-            return res.status(200).json(response.data);
+            res.status(200).json(response.data);
         })
         .catch(err => {
-            return res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 

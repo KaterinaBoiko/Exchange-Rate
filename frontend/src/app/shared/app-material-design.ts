@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     exports: [
@@ -17,7 +20,10 @@ import { MatTableModule } from '@angular/material/table';
         MatButtonModule,
         MatMenuModule,
         MatProgressBarModule,
-        MatTableModule
+        MatTableModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatProgressSpinnerModule
     ]
 })
 

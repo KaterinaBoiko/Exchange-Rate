@@ -1,0 +1,50 @@
+@import '../../../assets//styles//global.scss';
+
+:host {
+    display: block;
+    min-height: calc(100% - 150px);
+    background-color: $bg-color;
+    padding-top: 30px;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 70%;
+}
+
+table {
+    min-width: 100%;
+}
+
+.mat-header-cell,
+.mat-cell {
+    padding: 0 25px ;
+    text-align: center;
+}
+
+.home ::ng-deep .mat-form-field {
+
+    .mat-form-field-flex {
+        padding: 0 10px !important;
+    }
+
+    .mat-form-field-infix {
+        padding: 0 !important;
+    }
+
+    .mat-form-field-underline {
+        bottom: 0;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+}
+
+input {
+    color: white;
+}
+
+.spinner {
+    margin-right: 20px;
+}

@@ -1,10 +1,13 @@
+@import '../../../../assets/styles/global.scss';
+
 :host {
     display: block;
-    height: 100%;
+    height: calc(100% - 120px);
+    background-color: $bg-color;
 }
 
 .register {
-    padding-top: 12%;
+    padding-top: 60px;
 }
 
 .register-card {
@@ -17,6 +20,7 @@
 
     button {
         margin: 10px;
+        width: 150px;
     }
 
     a {

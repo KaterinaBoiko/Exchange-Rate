@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { ToastrModule } from 'ngx-toastr';
+
 import { MaterialModule } from './app-material-design';
 
 @NgModule({
@@ -13,13 +15,15 @@ import { MaterialModule } from './app-material-design';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ToastrModule.forRoot()
   ],
   exports: [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    ToastrModule
   ]
 })
 export class SharedModule { }

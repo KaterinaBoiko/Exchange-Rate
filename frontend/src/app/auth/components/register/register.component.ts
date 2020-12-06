@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -17,8 +18,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   registerForm: FormGroup;
 
-  get login(): AbstractControl {
-    return this.registerForm.get('login');
+  get username(): AbstractControl {
+    return this.registerForm.get('username');
+  }
+
+  get email(): AbstractControl {
+    return this.registerForm.get('email');
   }
 
   get password(): AbstractControl {
@@ -32,6 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) { }
 
@@ -46,7 +52,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.registerForm = this.formBuilder.group({
-      login: ['', Validators.required],
+      username: [''],
+      email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       repeatPassword: ['', Validators.required]
     },
@@ -62,9 +69,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.authService.register(this.registerForm.value)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(
-          user => console.log(user),
+          response => {
+            console.log(response);
+            this.showSuccess('User was created');
+            this.router.navigate(['/login']);
+          },
           error => {
             console.log(error);
+            this.showError(error.error?.message || error.message);
           }
         );
     }
@@ -81,6 +93,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
       control.get('repeatPassword').setErrors({ passwordMismatch: null });
       control.get('repeatPassword').updateValueAndValidity({ onlySelf: true });
     }
+  }
+
+  showSuccess(message: string) {
+    this.toastr.success(message, 'Success');
+  }
+
+  showError(error: string) {
+    this.toastr.error(error, 'Error');
   }
 
 }
