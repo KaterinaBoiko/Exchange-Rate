@@ -14,7 +14,7 @@ app.post('/signin', (req, res) => {
     const { email } = req.body;
     sql.query(`select * from users where email = '${ email }'`, (err, users) => {
         if (err)
-            return res.status(500).json(err.message);
+            return res.status(500).json(err.routine);
 
         if (!users.rowCount)
             return res.status(404).json('Email does not exist');
@@ -30,7 +30,7 @@ app.post('/signup', (req, res) => {
             if (err) {
                 if (err.code == 23505)
                     return res.status(409).json('Email is already exist');
-                return res.status(500).json(err.detail);
+                return res.status(500).json(err.routine);
             }
 
             return res.status(200).json('success');
@@ -41,7 +41,7 @@ app.get('/rate/:date', (req, res) => {
     const { date } = req.params;
     sql.query(`select rates.*, pairs.currency from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${ date }' and rates.sale_privat is not null`, (err, data) => {
         if (err)
-            return res.status(500).json(err.mesage);
+            return res.status(err.routine === 'DateTimeParseError' ? 400 : 500).json(err.routine);
 
         if (!data.rowCount)
             return res.status(204).json(data.rows);
@@ -54,7 +54,7 @@ app.get('/details/:currency', (req, res) => {
     const { currency } = req.params;
     sql.query(`select * from currencies where code = '${ currency }'`, (err, data) => {
         if (err)
-            return res.status(500).json(err.mesage);
+            return res.status(500).json(err.routine);
 
         return res.status(200).json(data.rows[ 0 ]);
     });
@@ -66,7 +66,7 @@ app.get('/interval-rates/:currency', (req, res) => {
 
     sql.query(`select * from exchange_rates where currency_pair_id = (select id from currency_pairs where base_currency = 'UAH' and currency = '${ currency }') and date >= '${ from }' and date < '${ to }'`, (err, data) => {
         if (err)
-            return res.status(500).json(err);
+            return res.status(500).json(err.routine);
 
         return res.status(200).json(data.rows);
     });
@@ -77,7 +77,7 @@ app.get('/currency-pairs', (req, res) => {
         `(select title from currencies where code = pairs.currency) currency_title, ` +
         `(select title from currencies where code = pairs.base_currency) base_currency_title from currency_pairs pairs`, (err, data) => {
             if (err)
-                return res.status(500).json(err.mesage);
+                return res.status(500).json(err.routine);
 
             return res.status(200).json(data.rows);
         });
@@ -89,12 +89,12 @@ app.get('/get-nbu-rate', (req, res) => {
     sql.query(`select id, base_currency from currency_pairs where base_currency='${ base_currency }' and currency = '${ currency }' ` +
         `or base_currency='${ currency }' and currency = '${ base_currency }'`, (err, result) => {
             if (err)
-                return res.status(500).json(err.mesage);
+                return res.status(500).json(err.routine);
 
             const { id, base_currency } = result.rows[ 0 ];
             sql.query(`select rate_nb from exchange_rates where currency_pair_id = ${ id } and date = '${ date }'`, (err, result) => {
                 if (err)
-                    return res.status(500).json(err);
+                    return res.status(500).json(err.routine);
 
                 const { rate_nb } = result.rows[ 0 ];
                 return res.status(200).json({ rate_nb, base_currency });
@@ -106,7 +106,7 @@ app.get('/nbu-rate/:date', (req, res) => {
     const { date } = req.params;
     sql.query(`select pairs.base_currency, pairs.currency, rates.rate_nb from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${ date }' and rates.rate_nb is not null`, (err, data) => {
         if (err)
-            return res.status(500).json(err.mesage);
+            return res.status(err.routine === 'DateTimeParseError' ? 400 : 500).json(err.routine);
 
         if (!data.rowCount)
             return res.status(204).json(data.rows);

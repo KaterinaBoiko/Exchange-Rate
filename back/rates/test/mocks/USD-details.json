@@ -1,0 +1,63 @@
+{
+    "code": "USD",
+    "ukr_title": "Долар США",
+    "title": "United States Dollar",
+    "data": [
+        {
+            "id": 377,
+            "currency_pair_id": 25,
+            "rate_nb": 28.3038,
+            "sale_privat": 28.6,
+            "purchase_privat": 28.2,
+            "date": "2020-12-05T22:00:00.000Z"
+        },
+        {
+            "id": 251,
+            "currency_pair_id": 25,
+            "rate_nb": 28.3038,
+            "sale_privat": 28.6,
+            "purchase_privat": 28.2,
+            "date": "2020-12-04T22:00:00.000Z"
+        },
+        {
+            "id": 486,
+            "currency_pair_id": 25,
+            "rate_nb": 28.4367,
+            "sale_privat": 28.66,
+            "purchase_privat": 28.25,
+            "date": "2020-12-02T22:00:00.000Z"
+        },
+        {
+            "id": 649,
+            "currency_pair_id": 25,
+            "rate_nb": 28.3038,
+            "sale_privat": 28.6,
+            "purchase_privat": 28.2,
+            "date": "2020-12-03T22:00:00.000Z"
+        },
+        {
+            "id": 712,
+            "currency_pair_id": 25,
+            "rate_nb": 28.5583,
+            "sale_privat": 28.7,
+            "purchase_privat": 28.3,
+            "date": "2020-12-01T22:00:00.000Z"
+        },
+        {
+            "id": 1154,
+            "currency_pair_id": 25,
+            "rate_nb": 28.2913,
+            "sale_privat": 28.6,
+            "purchase_privat": 28.2,
+            "date": "2020-12-06T22:00:00.000Z"
+        },
+        {
+            "id": 1279,
+            "currency_pair_id": 25,
+            "rate_nb": 28.2394,
+            "sale_privat": 28.45,
+            "purchase_privat": 28.05,
+            "date": "2020-12-07T22:00:00.000Z"
+        }
+    ]
+}
