@@ -41,7 +41,7 @@ app.get('/currency-pairs', (req, res) => {
 
 app.get('/convert', (req, res) => {
     const { amount, currency, base_currency } = req.query;
-    const date = formatDate(new Date(), "dd.m.yyyy");
+    const date = formatDate(new Date(), "d.m.yyyy");
     const params = { currency, base_currency, date };
     axios.get(`${ dbService }/get-nbu-rate`, { params })
         .then(response => {
@@ -61,7 +61,7 @@ app.get('/convert', (req, res) => {
 });
 
 app.get('/current-nbu-rate', (req, res) => {
-    const date = formatDate(new Date(), "dd.m.yyyy");
+    const date = formatDate(new Date(), "d.m.yyyy");
     axios.get(`${ dbService }/nbu-rate/${ date }`)
         .then(async (response) => {
             if (response.status === 204) {
@@ -91,8 +91,8 @@ app.get('/details/:currency', (req, res) => {
                 to = new Date();
             }
             const params = {
-                from: formatDate(from, "dd.m.yyyy"),
-                to: formatDate(to, "dd.m.yyyy")
+                from: formatDate(from, "d.m.yyyy"),
+                to: formatDate(to, "d.m.yyyy")
             };
             axios.get(`${ dbService }/interval-rates/${ currency }`, { params })
                 .then(response => {

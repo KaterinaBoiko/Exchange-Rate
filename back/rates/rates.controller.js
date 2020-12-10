@@ -28,6 +28,7 @@ exports.getCurrencyDetails = (req, res, next) => {
 };
 
 exports.getCurrentNBURate = (req, res, next) => {
+    console.log(1);
     ratesModel.getCurrentNBURate(req, (err, result) => {
         if (err)
             return res.status(err.status || 500).json({ message: err.data });
@@ -37,7 +38,9 @@ exports.getCurrentNBURate = (req, res, next) => {
 
 exports.convert = (req, res, next) => {
     ratesModel.convert(req, (err, result) => {
-        if (err)
+        if (err === 'Invalid amount')
+            return res.status(400).json({ message: err });
+        else if (err)
             return res.status(err.status || 500).json({ message: err.data });
         return res.status(200).json(result);
     });

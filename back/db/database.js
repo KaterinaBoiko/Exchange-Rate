@@ -83,24 +83,30 @@ app.get('/currency-pairs', (req, res) => {
         });
 });
 
-app.get('/get-nbu-rate', (req, res) => {
-    const { currency, base_currency, date } = req.query;
+app.get('/get-nbu-rate', async (req, res) => {
+    const { date } = req.query;
+    const result = await getPair(req);
+    if (!result.rowCount)
+        return res.status(204).end();
 
-    sql.query(`select id, base_currency from currency_pairs where base_currency='${ base_currency }' and currency = '${ currency }' ` +
-        `or base_currency='${ currency }' and currency = '${ base_currency }'`, (err, result) => {
-            if (err)
-                return res.status(500).json(err.routine);
+    const { id, base_currency } = result.rows[ 0 ];
+    sql.query(`select rate_nb from exchange_rates where currency_pair_id = ${ id } and date = '${ date }'`, (err, result) => {
+        if (err)
+            return res.status(500).json(err.routine);
 
-            const { id, base_currency } = result.rows[ 0 ];
-            sql.query(`select rate_nb from exchange_rates where currency_pair_id = ${ id } and date = '${ date }'`, (err, result) => {
-                if (err)
-                    return res.status(500).json(err.routine);
+        if (!result.rowCount)
+            return res.status(204).json(`No data about NBU rate on this date`);
 
-                const { rate_nb } = result.rows[ 0 ];
-                return res.status(200).json({ rate_nb, base_currency });
-            });
-        });
+        const { rate_nb } = result.rows[ 0 ];
+        return res.status(200).json({ rate_nb, base_currency });
+    });
 });
+
+function getPair(req) {
+    const { currency, base_currency } = req.query;
+    return sql.query(`select id, base_currency from currency_pairs where base_currency='${ base_currency }' and currency = '${ currency }' ` +
+        `or base_currency='${ currency }' and currency = '${ base_currency }'`);
+}
 
 app.get('/nbu-rate/:date', (req, res) => {
     const { date } = req.params;

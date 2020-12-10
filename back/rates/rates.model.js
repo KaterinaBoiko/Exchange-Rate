@@ -41,7 +41,7 @@ exports.getCurrencyDetails = (req, res) => {
 };
 
 exports.getCurrentNBURate = (req, res) => {
-    const date = formatDate(new Date(), "dd.m.yyyy");
+    const date = formatDate(new Date(), "d.m.yyyy");
     axios.get(`${ dbService }/nbu-rate/${ date }`)
         .then(async (response) => {
             if (response.status === 204) {
@@ -58,10 +58,18 @@ exports.getCurrentNBURate = (req, res) => {
 
 exports.convert = (req, res) => {
     const { amount, currency, base_currency } = req.query;
-    const date = formatDate(new Date(), "dd.m.yyyy");
+
+    if (isNaN(amount))
+        return res('Invalid amount');
+
+    const date = formatDate(new Date(), "d.m.yyyy");
     const params = { currency, base_currency, date };
+
     axios.get(`${ dbService }/get-nbu-rate`, { params })
         .then(response => {
+            if (response.status === 204)
+                return res(null, { message: `No pair ${ currency } and ${ base_currency } found` });
+
             const rate_nb = response.data.rate_nb;
             const base_currency_db = response.data.base_currency;
 
@@ -80,18 +88,21 @@ exports.convert = (req, res) => {
 
 function getFormatedtFromToDates(req) {
     let { from, to } = req.query;
-    if (!from) {
-        from = new Date();
-        from.setDate(from.getDate() - 7);
-    }
     if (!to) {
         to = new Date();
     }
+
+    if (!from) {
+        from = new Date(to);
+        from.setDate(from.getDate() - 7);
+    }
+
     return {
-        from: formatDate(from, "dd.m.yyyy"),
-        to: formatDate(to, "dd.m.yyyy")
+        from: formatDate(from, "d.m.yyyy"),
+        to: formatDate(to, "d.m.yyyy")
     };
-}
+};
+
 function getRateByDate(req, res, date) {
     axios.get(`${ dbService }/rate/${ date }`)
         .then(async (response) => {
@@ -132,3 +143,5 @@ function setPrivatRateByDate(date) {
             console.log(error);
         });
 }
+
+setPrivatRateByDate('11.12.2020');
