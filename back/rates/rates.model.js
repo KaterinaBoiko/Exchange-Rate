@@ -143,5 +143,3 @@ function setPrivatRateByDate(date) {
             console.log(error);
         });
 }
-
-setPrivatRateByDate('11.12.2020');

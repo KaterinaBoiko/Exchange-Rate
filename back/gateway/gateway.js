@@ -33,6 +33,16 @@ app.post('/signup', (req, res) => {
         });
 });
 
+app.delete('/delete/:id', (req, res) => {
+    axios.delete(`${ authService }/delete/${ req.params.id }`, req.body)
+        .then(response => {
+            res.status(200).json({ message: response.data });
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
+        });
+});
+
 app.get('/rate/:date', (req, res) => {
     const { date } = req.params;
 

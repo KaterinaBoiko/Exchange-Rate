@@ -1,4 +1,3 @@
-const { response } = require('express');
 const ratesModel = require('./rates.model');
 
 exports.getRateByDate = (req, res, next) => {
@@ -28,7 +27,6 @@ exports.getCurrencyDetails = (req, res, next) => {
 };
 
 exports.getCurrentNBURate = (req, res, next) => {
-    console.log(1);
     ratesModel.getCurrentNBURate(req, (err, result) => {
         if (err)
             return res.status(err.status || 500).json({ message: err.data });
