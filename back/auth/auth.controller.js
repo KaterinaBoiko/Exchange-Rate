@@ -2,7 +2,6 @@ const authModel = require('./auth.model');
 
 exports.signIn = (req, res, next) => {
     authModel.signIn(req, (err, result) => {
-        console.log(result);
         if (err)
             return res.status(err.status || 500).json(err.data);
         return res.status(200).json(result);
@@ -13,7 +12,7 @@ exports.signUp = (req, res, next) => {
     authModel.signUp(req, (err, result) => {
         if (err)
             return res.status(err.status || 500).json(err.data);
-        return res.status(200).json(result);
+        return res.status(200).json({message: result});
     });
 };
 

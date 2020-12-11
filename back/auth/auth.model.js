@@ -35,7 +35,7 @@ exports.signUp = (req, res) => {
 
     if (!password || !email)
         return res({ data: 'Required data is not provided' });
-
+        
     const user = { ...req.body, password: bcrypt.hashSync(password, saltRounds) };
     axios.post(`${ dbService }/signup`, user)
         .then(response => {
