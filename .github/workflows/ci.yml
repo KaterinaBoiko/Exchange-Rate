@@ -14,12 +14,27 @@ jobs:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
+      
     - name: Install Dependencies
       working-directory: ./back/gateway
       run: npm install
+
     - name: Install Testing Dependencies
       working-directory: ./back/gateway/test
       run: npm install
+
+    - name: Run auth service
+      working-directory: ./back/auth
+      run: node auth.js
+
+    - name: Run rates service
+      working-directory: ./back/rates
+      run: node rates.js
+
+    - name: Run database service
+      working-directory: ./back/database
+      run: node database.js
+
     - name: Run Tests
       working-directory: ./back/gateway/test
       run: npm test
