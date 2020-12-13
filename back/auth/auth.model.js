@@ -17,7 +17,7 @@ exports.signIn = (req, res) => {
             const user = result.data;
 
             if (!bcrypt.compareSync(password, user.password))
-                return res('Incorrect password');
+                return res({ data: 'Incorrect password' });
 
             const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: '7d' });
             delete user.password;
@@ -35,7 +35,7 @@ exports.signUp = (req, res) => {
 
     if (!password || !email)
         return res({ data: 'Required data is not provided' });
-        
+
     const user = { ...req.body, password: bcrypt.hashSync(password, saltRounds) };
     axios.post(`${ dbService }/signup`, user)
         .then(response => {
@@ -48,6 +48,16 @@ exports.signUp = (req, res) => {
 
 exports.deleteById = (req, res) => {
     axios.delete(`${ dbService }/delete/${ req.params.id }`)
+        .then(result => {
+            res(null, result.data);
+        })
+        .catch(err => {
+            res(err.response);
+        });
+};
+
+exports.deleteByEmail = (req, res) => {
+    axios.delete(`${ dbService }/delete-by-email/${ req.params.email }`)
         .then(result => {
             res(null, result.data);
         })

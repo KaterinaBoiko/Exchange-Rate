@@ -46,6 +46,17 @@ app.delete('/delete/:id', (req, res) => {
     });
 });
 
+app.delete('/delete-by-email/:email', (req, res) => {
+    const { email } = req.params;
+    sql.query(`delete from users where email = '${ email }'`, (err) => {
+        if (err) {
+            return res.status(500).json(err.routine);
+        }
+
+        return res.status(200).json('success');
+    });
+});
+
 app.get('/rate/:date', (req, res) => {
     const { date } = req.params;
     sql.query(`select rates.*, pairs.currency from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${ date }' and rates.sale_privat is not null`, (err, data) => {
