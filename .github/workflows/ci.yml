@@ -14,10 +14,15 @@ jobs:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Install Dependencies
+      working-directory: ./back/gateway
+      run: npm install
+    - name: Install Testing Dependencies
+      working-directory: ./back/gateway/test
+      run: npm install
+    - name: Run Tests
+      working-directory: ./back/gateway/test
+      run: npm test
+
       env:
         CI: true
