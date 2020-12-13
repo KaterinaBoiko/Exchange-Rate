@@ -12,7 +12,7 @@ const ratesService = 'http://localhost:3007';
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
+let count = 0;
 app.post('/signin', (req, res) => {
     axios.post(`${ authService }/signin`, req.body)
         .then(response => {
@@ -55,7 +55,7 @@ app.delete('/delete-by-email/:email', (req, res) => {
 
 app.get('/rate/:date', (req, res) => {
     const { date } = req.params;
-
+    console.log('rate ', count++);
     axios.get(`${ ratesService }/rate/${ date }`)
         .then(response => {
             res.status(200).json(response.data);
@@ -67,6 +67,7 @@ app.get('/rate/:date', (req, res) => {
 
 app.get('/details/:currency', (req, res) => {
     const { currency } = req.params;
+    console.log('details ', count++);
 
     axios.get(`${ ratesService }/details/${ currency }`, { params: req.query })
         .then(response => {

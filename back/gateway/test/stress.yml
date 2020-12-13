@@ -1,0 +1,11 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 20
+scenarios:
+  - flow:
+    - get:
+        url: '/rate/25.11.2020'
+    - get:
+        url: '/details/USD'
