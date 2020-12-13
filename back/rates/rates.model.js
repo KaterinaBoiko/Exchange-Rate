@@ -88,6 +88,7 @@ exports.convert = (req, res) => {
 
 function getFormatedtFromToDates(req) {
     let { from, to } = req.query;
+
     if (!to) {
         to = new Date();
     }
@@ -95,6 +96,10 @@ function getFormatedtFromToDates(req) {
     if (!from) {
         from = new Date(to);
         from.setDate(from.getDate() - 7);
+    }
+
+    if (new Date(from) > new Date(to)) {
+        throw 'Incorrect dates sequence';
     }
 
     return {

@@ -1,11 +1,9 @@
-const sql = require('../db/connection');
+const sql = require('./connection');
 
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-
-const { connected } = require('process');
 
 const app = express();
 app.use(bodyParser.json());

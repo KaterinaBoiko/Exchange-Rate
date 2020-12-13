@@ -248,4 +248,15 @@ describe('Units', () => {
         expect(params.to).to.be.equal(expectedTo);
         done();
     });
+
+    it('it should throw an error if incorrect dates sequence', function (done) {
+        const message = 'Incorrect dates sequence';
+        req.query = {
+            from: '12.30.2020',
+            to: '12.8.2020'
+        };
+        const getFormatedtFromToDates = model.__get__('getFormatedtFromToDates');
+        expect(getFormatedtFromToDates.bind(model, req)).to.throw(message);
+        done();
+    });
 });
