@@ -6,58 +6,48 @@ jobs:
 
   auth:
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-    - name: Install auth dependencies
-      working-directory: ./back/auth
-      run: npm install
-
-    - name: Run auth service
-      working-directory: ./back/auth
-      run: node auth.js
+      - name: Run auth service
+        uses: ./
+        with:
+          working-directory: ./back/auth
+          start: npm run build
+          wait-on: 'http://localhost:3005'
 
   rates:
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-
-    - name: Install rates dependencies
-      working-directory: ./back/rates
-      run: npm install
+    - name: Checkout
+      uses: actions/checkout@v1
 
     - name: Run rates service
-      working-directory: ./back/rates
-      run: node rates.js
+      uses: ./
+      with:
+        working-directory: ./back/rates
+        start: npm run build
+        wait-on: 'http://localhost:3007'
 
   database:
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-
-    - name: Install database dependencies
-      working-directory: ./back/database
-      run: npm install
+    - name: Checkout
+      uses: actions/checkout@v1
 
     - name: Run database service
-      working-directory: ./back/database
-      run: node database.js
+      uses: ./
+      with:
+        working-directory: ./back/database
+        start: npm run build
+        wait-on: 'http://localhost:3003'
 
   gateway:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - name: Checkout
+      uses: actions/checkout@v1
 
     - name: Install gateway dependencies
       working-directory: ./back/gateway
@@ -73,3 +63,80 @@ jobs:
 
       env:
         CI: true
+
+
+# name: Node.js CI
+
+# on: [push]
+
+# jobs:
+
+#   auth:
+#     runs-on: windows-latest
+
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+
+#     - name: Install auth dependencies
+#       working-directory: ./back/auth
+#       run: npm install
+
+#     - name: Run auth service
+#       working-directory: ./back/auth
+#       run: node auth.js
+
+#   rates:
+#     runs-on: windows-latest
+
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+
+#     - name: Install rates dependencies
+#       working-directory: ./back/rates
+#       run: npm install
+
+#     - name: Run rates service
+#       working-directory: ./back/rates
+#       run: node rates.js
+
+#   database:
+#     runs-on: windows-latest
+
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+
+#     - name: Install database dependencies
+#       working-directory: ./back/database
+#       run: npm install
+
+#     - name: Run database service
+#       working-directory: ./back/database
+#       run: node database.js
+
+#   gateway:
+#     runs-on: windows-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+
+#     - name: Install gateway dependencies
+#       working-directory: ./back/gateway
+#       run: npm install
+
+#     - name: Install testing dependencies
+#       working-directory: ./back/gateway/test
+#       run: npm install
+
+#     - name: Run tests
+#       working-directory: ./back/gateway/test
+#       run: npm test
+
+#       env:
+#         CI: true
