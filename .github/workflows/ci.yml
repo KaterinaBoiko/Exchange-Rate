@@ -3,12 +3,9 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  build:
 
+  auth:
     runs-on: windows-latest
-    defaults:
-        run:
-          working-directory: ./back/gateway/test
 
     steps:
     - uses: actions/checkout@v2
@@ -23,6 +20,14 @@ jobs:
       working-directory: ./back/auth
       run: node auth.js
 
+  rates:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+
     - name: Install rates dependencies
       working-directory: ./back/rates
       run: npm install
@@ -31,6 +36,14 @@ jobs:
       working-directory: ./back/rates
       run: node rates.js
 
+  database:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+
     - name: Install database dependencies
       working-directory: ./back/database
       run: npm install
@@ -38,6 +51,14 @@ jobs:
     - name: Run database service
       working-directory: ./back/database
       run: node database.js
+
+  gateway:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
 
     - name: Install gateway dependencies
       working-directory: ./back/gateway
