@@ -20,29 +20,30 @@ describe('/GET rates by date', () => {
                 done();
             });
     });
+});
 
-    it('it should return 400 and error message if invalid date', (done) => {
-        const errorMessage = 'Invalid date format';
-        chai.request(server)
-            .get('/rate/blabla')
-            .end((err, res) => {
-                expect(res.status).to.be.equal(400);
-                expect(res.body).to.be.an.instanceof(Object);
-                expect(res.body).to.have.property('message');
-                expect(res.body.message).to.be.equal(errorMessage);
-                done();
-            });
-    });
+it('it should return 400 and error message if invalid date', (done) => {
+    const errorMessage = 'Invalid date format';
+    chai.request(server)
+        .get('/rate/blabla')
+        .end((err, res) => {
+            expect(res.status).to.be.equal(400);
+            expect(res.body).to.be.an.instanceof(Object);
+            expect(res.body).to.have.property('message');
+            expect(res.body.message).to.be.equal(errorMessage);
+            done();
+        });
+});
 
-    it('it should return 404 if no date', (done) => {
-        const errorMessage = 'Invalid date format';
-        chai.request(server)
-            .get('/rate')
-            .end((err, res) => {
-                expect(res.status).to.be.equal(404);
-                done();
-            });
-    });
+it('it should return 404 if no date', (done) => {
+    const errorMessage = 'Invalid date format';
+    chai.request(server)
+        .get('/rate')
+        .end((err, res) => {
+            expect(res.status).to.be.equal(404);
+            done();
+        });
+});
 });
 
 describe('/GET currency pairs', () => {
