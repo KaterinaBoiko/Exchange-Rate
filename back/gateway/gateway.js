@@ -19,24 +19,34 @@ app.post('/signin', (req, res) => {
             res.status(200).json(response.data);
         })
         .catch(err => {
-            res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 
 app.post('/signup', (req, res) => {
     axios.post(`${ authService }/signup`, req.body)
         .then(response => {
-            res.status(200).json({ message: response.data });
+            res.status(200).json(response.data);
         })
         .catch(err => {
-            res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
+            res.status(err.response ? err.response.status : 500).json(err.response ? err.response.data : err.message);
         });
 });
 
 app.delete('/delete/:id', (req, res) => {
     axios.delete(`${ authService }/delete/${ req.params.id }`, req.body)
         .then(response => {
-            res.status(200).json({ message: response.data });
+            res.status(200).json(response.data);
+        })
+        .catch(err => {
+            res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
+        });
+});
+
+app.delete('/delete-by-email/:email', (req, res) => {
+    axios.delete(`${ authService }/delete-by-email/${ req.params.email }`, req.body)
+        .then(response => {
+            res.status(200).json(response.data);
         })
         .catch(err => {
             res.status(err.response ? err.response.status : 500).json({ message: err.response ? err.response.data : err.message });
@@ -126,3 +136,5 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Gateway running on localhost:${ port }`));
+
+module.exports = app;

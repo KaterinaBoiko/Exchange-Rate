@@ -165,3 +165,5 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Database service running on localhost:${ port }`));
+
+module.exports = app;
