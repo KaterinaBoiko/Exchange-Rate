@@ -7,21 +7,23 @@ jobs:
   auth:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
 
-      - name: Run auth service
-        uses: ./
-        with:
-          working-directory: ./back/auth
-          start: npm run build
-          wait-on: 'http://localhost:3005'
+    - name: Run auth service
+      uses: ./
+      with:
+        working-directory: ./back/auth
+        start: npm run build
+        wait-on: 'http://localhost:3005'
 
   rates:
     runs-on: windows-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
 
     - name: Run rates service
       uses: ./
@@ -33,8 +35,9 @@ jobs:
   database:
     runs-on: windows-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
 
     - name: Run database service
       uses: ./
@@ -46,8 +49,9 @@ jobs:
   gateway:
     runs-on: windows-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
 
     - name: Install gateway dependencies
       working-directory: ./back/gateway
