@@ -44,7 +44,6 @@ it('it should return 404 if no date', (done) => {
             done();
         });
 });
-});
 
 describe('/GET currency pairs', () => {
     it('it should return 200', (done) => {
@@ -259,5 +258,25 @@ describe('Units', () => {
         const getFormatedtFromToDates = model.__get__('getFormatedtFromToDates');
         expect(getFormatedtFromToDates.bind(model, req)).to.throw(message);
         done();
+    });
+
+    it('it should take less than 10ms', function (done) {
+        this.timeout(10);
+        req.query = {
+            from: '12.3.2020',
+            to: '12.8.2020'
+        };
+        const getFormatedtFromToDates = model.__get__('getFormatedtFromToDates');
+        const expectedFrom = '3.12.2020';
+        const expectedTo = '8.12.2020';
+
+        const params = getFormatedtFromToDates(req);
+        expect(params).to.be.an.instanceof(Object);
+        expect(params).to.have.property('from');
+        expect(params.from).to.be.equal(expectedFrom);
+        expect(params).to.have.property('to');
+        expect(params.to).to.be.equal(expectedTo);
+        done();
+        //setTimeout(done, 100);
     });
 });

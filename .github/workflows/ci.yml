@@ -21,6 +21,18 @@ jobs:
       working-directory: ./back/rates
       run: npm run build
   database:
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: exchanges
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
