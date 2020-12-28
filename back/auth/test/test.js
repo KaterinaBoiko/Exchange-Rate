@@ -29,8 +29,8 @@ describe('/POST sign in', () => {
 
     it('it should return user if credentials are correct', (done) => {
         const user = {
-            email: 'kate@mail.com',
-            password: 'password'
+            email: 'test@gmail.com',
+            password: 'test12'
         };
         chai.request(server)
             .post('/signin')

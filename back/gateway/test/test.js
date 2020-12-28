@@ -12,8 +12,8 @@ describe('AUTH routes', () => {
 
         it('it should return user if find such email', (done) => {
             const user = {
-                email: 'kate@mail.com',
-                password: 'password'
+                email: 'test@gmail.com',
+                password: 'test12'
             };
             chai.request(server)
                 .post('/signin')

@@ -44,7 +44,6 @@ it('it should return 404 if no date', (done) => {
             done();
         });
 });
-});
 
 describe('/GET currency pairs', () => {
     it('it should return 200', (done) => {

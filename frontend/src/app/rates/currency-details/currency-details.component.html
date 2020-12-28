@@ -8,7 +8,7 @@
     </div>
 
     <div *ngIf="chartDetails" class="chart">
-        <canvas baseChart [chartType]="chartDetails.type" [height]="200" [colors]="colors"
+        <canvas baseChart [chartType]="chartDetails.type" [height]="150" [colors]="colors"
             [datasets]="chartDetails.datasets" [labels]="chartDetails.labels" [options]="chartDetails.options">
         </canvas>
     </div>
