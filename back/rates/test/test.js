@@ -89,9 +89,9 @@ describe('/GET current rate NBU', () => {
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
                 expect(res.body).to.be.an.instanceof(Array);
-                expect(res.body[ 0 ]).to.have.property('base_currency').that.is.a('string');
-                expect(res.body[ 0 ]).to.have.property('currency').that.is.a('string');
-                expect(res.body[ 0 ]).to.have.property('rate_nb').that.is.a('number');
+                expect(res.body[0]).to.have.property('base_currency').that.is.a('string');
+                expect(res.body[0]).to.have.property('currency').that.is.a('string');
+                expect(res.body[0]).to.have.property('rate_nb').that.is.a('number');
                 done();
             });
     });
@@ -258,5 +258,25 @@ describe('Units', () => {
         const getFormatedtFromToDates = model.__get__('getFormatedtFromToDates');
         expect(getFormatedtFromToDates.bind(model, req)).to.throw(message);
         done();
+    });
+
+    it('it should take less than 10ms', function (done) {
+        this.timeout(10);
+        req.query = {
+            from: '12.3.2020',
+            to: '12.8.2020'
+        };
+        const getFormatedtFromToDates = model.__get__('getFormatedtFromToDates');
+        const expectedFrom = '3.12.2020';
+        const expectedTo = '8.12.2020';
+
+        const params = getFormatedtFromToDates(req);
+        expect(params).to.be.an.instanceof(Object);
+        expect(params).to.have.property('from');
+        expect(params.from).to.be.equal(expectedFrom);
+        expect(params).to.have.property('to');
+        expect(params.to).to.be.equal(expectedTo);
+        done();
+        //setTimeout(done, 100);
     });
 });
