@@ -18,17 +18,17 @@ export class RateService {
 
   getRateByDate(date: string): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/rate/${date}`);
+      `${this.apiUrl}/rates/${date}`);
   }
 
   getCurrencyPairs(): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/currency-pairs`);
+      `${this.apiUrl}/rates/currency-pairs`);
   }
 
   getCurrentNBURate(): Observable<any> {
     return this.http.get(
-      `${this.apiUrl}/current-nbu-rate`);
+      `${this.apiUrl}/rates/current-nbu-rate`);
   }
 
   getCurrencyDetails(currency: string, dateFrom?: string, dateTo?: string): Observable<any> {
@@ -39,7 +39,7 @@ export class RateService {
       params = params.append('to', dateTo);
 
     return this.http.get(
-      `${this.apiUrl}/details/${currency}`, { params });
+      `${this.apiUrl}/rates/details/${currency}`, { params });
   }
 
   convert(amount: number, currency: string, base_currency: string): Observable<any> {
@@ -49,6 +49,6 @@ export class RateService {
       .append('base_currency', base_currency);
 
     return this.http.get(
-      `${this.apiUrl}/convert`, { params });
+      `${this.apiUrl}/rates/convert`, { params });
   }
 }
