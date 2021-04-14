@@ -1,8 +1,11 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
-const sql = require('../database/connection');
+const { sql, endConnection } = require('../database/connection');
+const { DATE } = require('./date');
 
-const date = formatDate(new Date(), "yyyy-mm-dd");
+const date = formatDate(DATE, "yyyy-mm-dd");
+console.log('Currency layer', date);;
+
 (function (date) {
     axios.get(`http://api.currencylayer.com/historical?access_key=d53eddc8bbd6f17586d4d83faa6a8740&date=${date}`)
         .then(response => {
@@ -13,7 +16,10 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                 const rate = data.quotes[pair];
                 if (currency && rate && uah) {
                     sql.query(`select id from currency_pairs where base_currency='UAH' and currency = '${currency}'`, (err, result) => {
-                        if (err || !result.rowCount)
+                        if (err)
+                            return console.log(err);
+
+                        if (!result.rowCount)
                             return;
 
                         sql.query(`update exchange_rates set world_rate = ${uah / rate} where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err, r) => {
@@ -23,7 +29,7 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                     });
                 }
             }
-            setTimeout(() => { sql.end(); }, 500);
+            endConnection();
         })
         .catch(error => {
             console.log(error);

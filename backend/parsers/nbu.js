@@ -1,18 +1,23 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
-const sql = require('../database/connection');
+const { sql, endConnection } = require('../database/connection');
+const { DATE } = require('./date');
 
-const date = formatDate(new Date(), "yyyymmdd");
-console.log(date);
+const date = formatDate(DATE, "yyyymmdd");
+console.log('NBU', date);
+
 (function (date) {
     axios.get(`https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?date=${date}&json`)
         .then(response => {
             const { data } = response;
-            data.forEach(pair => {
+            data.forEach((pair, i) => {
                 const { cc, rate } = pair;
                 if (cc && rate) {
                     sql.query(`select id from currency_pairs where base_currency='UAH' and currency = '${cc}'`, (err, result) => {
-                        if (err || !result.rowCount)
+                        if (err)
+                            return console.log(err);
+
+                        if (!result.rowCount)
                             return;
 
                         sql.query(`INSERT INTO exchange_rates (currency_pair_id, rate_nb, date)` +
@@ -23,7 +28,7 @@ console.log(date);
                     });
                 };
             });
-            sql.end();
+            endConnection();
         })
         .catch(error => {
             console.log(error);

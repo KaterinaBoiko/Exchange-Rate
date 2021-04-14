@@ -1,8 +1,10 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
-const sql = require('../database/connection');
+const { sql, endConnection } = require('../database/connection');
 
 const date = formatDate(new Date(), "yyyy-mm-dd");
+console.log('Mono', date);
+
 (function () {
     axios.get(`https://api.monobank.ua/bank/currency`)
         .then(response => {
@@ -14,7 +16,10 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                     return;
 
                 sql.query(`select id from currency_pairs where base_currency='UAH' and currency = (select code from currencies where number_code = ${currencyCodeA})`, (err, result) => {
-                    if (err || !result.rowCount)
+                    if (err)
+                        return console.log(err);
+
+                    if (!result.rowCount)
                         return;
 
                     rateSell = rateSell ? rateSell : rateCross;
@@ -25,7 +30,7 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                     });
                 });
             });
-            sql.end();
+            endConnection();
         })
         .catch(error => {
             console.log(error);
