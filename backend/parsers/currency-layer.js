@@ -16,13 +16,14 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                         if (err || !result.rowCount)
                             return;
 
-                        sql.query(`update exchange_rates set world_rate = ${uah / rate} where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err) => {
+                        sql.query(`update exchange_rates set world_rate = ${uah / rate} where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err, r) => {
                             if (err)
                                 return console.log(err);
                         });
                     });
                 }
             }
+            setTimeout(() => { sql.end(); }, 500);
         })
         .catch(error => {
             console.log(error);

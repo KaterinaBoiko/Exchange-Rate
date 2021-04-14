@@ -26,14 +26,14 @@ const date = formatDate(new Date(), "d.m.yyyy");
                         if (err || !result.rowCount)
                             return;
 
-                        sql.query(`INSERT INTO exchange_rates (currency_pair_id, rate_nb, sale_privat, purchase_privat, date)` +
-                            `values (${result.rows[0].id}, ${rate_nb ? rate_nb : 'null'}, ${sale_privat ? sale_privat : 'null'}, ${purchase_privat ? purchase_privat : 'null'}, '${date}') on conflict do nothing`, (err, result) => {
-                                if (err)
-                                    return console.log(err);
-                            });
+                        sql.query(`update exchange_rates set (sale_privat, purchase_privat) = (${sale_privat ? sale_privat : 'null'}, ${purchase_privat ? purchase_privat : 'null'}) where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err) => {
+                            if (err)
+                                return console.log(err);
+                        });
                     });
                 };
             });
+            sql.end();
         })
         .catch(error => {
             console.log(error);

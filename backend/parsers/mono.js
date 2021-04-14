@@ -25,6 +25,7 @@ const date = formatDate(new Date(), "yyyy-mm-dd");
                     });
                 });
             });
+            sql.end();
         })
         .catch(error => {
             console.log(error);
