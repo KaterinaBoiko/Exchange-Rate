@@ -65,15 +65,21 @@ export class CurrencyDetailsComponent implements OnInit {
   setChartDetails(): void {
     const { data } = this.details;
     const datasets = [
-      { label: 'PrivatBank purchase', data: [] },
-      { label: 'NBU rate', data: [] },
-      { label: 'PrivatBank sale', data: [] }
+      { label: 'NBU rate', data: [], fill: false },
+      { label: 'PrivatBank purchase', data: [], fill: false },
+      { label: 'PrivatBank sale', data: [], fill: false },
+      { label: 'Mono purchase', data: [], fill: false },
+      { label: 'Mono sale', data: [], fill: false },
+      { label: 'World rate', data: [], fill: false }
     ];
     const labels = [];
     data.forEach(row => {
-      datasets[0].data.push(row.purchase_privat);
-      datasets[1].data.push(row.rate_nb);
+      datasets[0].data.push(row.rate_nb);
+      datasets[1].data.push(row.purchase_privat);
       datasets[2].data.push(row.sale_privat);
+      datasets[3].data.push(row.purchase_mono);
+      datasets[4].data.push(row.sale_mono);
+      datasets[5].data.push(row.world_rate);
 
       labels.push(formatDate(row.date, 'dd.MM.yyyy', 'en-US'));
     });

@@ -1,9 +1,8 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
-const sql = require('../database/connection');
+const { sql } = require('../database/connection');
 
 exports.getRateByDate = (req, res) => {
-    console.log('date')
     const { date } = req.params;
     sql.query(`select rates.*, pairs.currency from exchange_rates rates left join currency_pairs pairs ON rates.currency_pair_id = pairs.id where rates.date = '${date}'`, (err, data) => {
         if (err)
@@ -51,8 +50,8 @@ exports.getCurrencyPairs = (req, res) => {
         `(select title from currencies where code = pairs.currency) currency_title, ` +
         `(select title from currencies where code = pairs.base_currency) base_currency_title from currency_pairs pairs`, (err, data) => {
             if (err)
-                return res(err.routine)
-            return res(null, data.rows)
+                return res(err.routine);
+            return res(null, data.rows);
         });
 };
 
@@ -77,7 +76,7 @@ function getFormatedtFromToDates(req) {
 
     if (!from) {
         from = new Date(to);
-        from.setMonth(from.getMonth() - 3);
+        from.setMonth(from.getMonth() - 4);
     }
 
     if (new Date(from) > new Date(to)) {

@@ -1,1 +1,1 @@
-exports.DATE = new Date('2021-04-15');
+exports.DATE = new Date();

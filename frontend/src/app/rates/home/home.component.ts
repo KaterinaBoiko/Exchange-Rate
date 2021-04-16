@@ -53,7 +53,8 @@ export class HomeComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
-          data.sort((a, b) => a.currency === 'USD' ? -1 : a.currency === 'EUR' ? -1 : a.currency.localeCompare(b.currency));
+          data.sort((a, b) => a.currency.localeCompare(b.currency));
+          data.sort(a => a.currency === 'USD' ? -1 : a.currency === 'EUR' ? -1 : 0);
           this.dataSource = data;
           this.showLoader = false;
         },
