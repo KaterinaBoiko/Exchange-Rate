@@ -49,13 +49,14 @@
             {{ this.amountCopy }} <span class="code">{{this.selectedCurrency.code}}</span> =
         </div>
         <div class="total-amount">
-            {{this.totalAmount | number:'0.1-5' }} <span class="code">{{this.selectedBaseCurrency.code}}</span>
+            {{ this.totalAmount | number:'0.1-2' }} <span class="code">{{this.selectedBaseCurrency.code}}</span>
         </div>
 
         <div class="additional">
-            <p>1 {{this.selectedBaseCurrency.code}} = {{this.revertedRateNBU | number:'0.1-5' }}
+            <p>1 {{ this.selectedBaseCurrency.code }} = {{ this.revertedRateNBU | number:'0.1-2' }}
                 {{this.selectedCurrency.code}}</p>
-            <p>1 {{this.selectedCurrency.code}} = {{this.rateNBU | number:'0.1-5' }} {{this.selectedBaseCurrency.code}}
+            <p>1 {{ this.selectedCurrency.code }} = {{ this.rateNBU | number:'0.1-2' }}
+                {{ this.selectedBaseCurrency.code }}
             </p>
         </div>
     </div>

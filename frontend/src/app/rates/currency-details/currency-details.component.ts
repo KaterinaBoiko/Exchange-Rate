@@ -14,6 +14,7 @@ import { CHART_COLORS } from '../constants/chart-configs';
   templateUrl: './currency-details.component.html',
   styleUrls: ['./currency-details.component.scss']
 })
+
 export class CurrencyDetailsComponent implements OnInit {
   private unsubscribe = new Subject<void>();
 
@@ -24,6 +25,10 @@ export class CurrencyDetailsComponent implements OnInit {
   chartDetails: ChartConfigs;
   colors = CHART_COLORS;
 
+  startDate: Date = localStorage.getItem('startDate') ? new Date(localStorage.getItem('startDate')) : new Date();
+  endDate: Date = localStorage.getItem('endDate') ? new Date(localStorage.getItem('endDate')) : new Date();
+  maxDate: Date = new Date();
+
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
@@ -32,6 +37,9 @@ export class CurrencyDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currency = this.route.snapshot.paramMap.get('currency');
+    if (!localStorage.getItem('endDate')) {
+      this.startDate.setMonth(this.startDate.getMonth() - 4);
+    }
     this.getCurrencyDetails();
   }
 
@@ -41,18 +49,21 @@ export class CurrencyDetailsComponent implements OnInit {
   }
 
   getCurrencyDetails(): void {
+    if (!this.endDate)
+      return;
+
     this.showLoader = true;
-    this.rateService.getCurrencyDetails(this.currency)
+    this.rateService.getCurrencyDetails(this.currency, formatDate(this.startDate, 'yyyy-MM-dd', 'en-US'), formatDate(this.endDate, 'yyyy-MM-dd', 'en-US'))
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
           this.showLoader = false;
           this.details = data;
-          if (!this.details.data.length) {
+          if (!this.details.length) {
             this.noData = true;
             return;
           }
-          this.details.data.sort((a, b) => a.date > b.date ? 1 : -1);
+          this.details.sort((a, b) => a.date > b.date ? 1 : -1);
           this.setChartDetails();
         },
         error => {
@@ -60,10 +71,12 @@ export class CurrencyDetailsComponent implements OnInit {
           this.showError(error.message);
         }
       );
+
+    localStorage.setItem('startDate', formatDate(this.startDate, 'yyyy-MM-dd', 'en-US'));
+    localStorage.setItem('endDate', formatDate(this.endDate, 'yyyy-MM-dd', 'en-US'));
   }
 
   setChartDetails(): void {
-    const { data } = this.details;
     const datasets = [
       { label: 'NBU rate', data: [], fill: false },
       { label: 'PrivatBank purchase', data: [], fill: false },
@@ -73,7 +86,7 @@ export class CurrencyDetailsComponent implements OnInit {
       { label: 'World rate', data: [], fill: false }
     ];
     const labels = [];
-    data.forEach(row => {
+    this.details.forEach(row => {
       datasets[0].data.push(row.rate_nb);
       datasets[1].data.push(row.purchase_privat);
       datasets[2].data.push(row.sale_privat);
@@ -84,7 +97,7 @@ export class CurrencyDetailsComponent implements OnInit {
       labels.push(formatDate(row.date, 'dd.MM.yyyy', 'en-US'));
     });
 
-    const options = this.setOptions(data);
+    const options = this.setOptions(this.details);
 
     this.chartDetails = new ChartConfigs(datasets, labels, options);
   }

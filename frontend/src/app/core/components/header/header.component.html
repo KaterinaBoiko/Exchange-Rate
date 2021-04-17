@@ -6,16 +6,6 @@
         <a routerLink="/rates">Rates</a>
         <a routerLink="/converter">Converter</a>
     </div>
-
-    <button *ngIf="user" mat-button [matMenuTriggerFor]="userMenu">
-        {{ user.username }}
-        <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-
-    <div *ngIf="!user" class="login flex align-center" routerLink="/login">
-        <mat-icon>login</mat-icon>
-        Login
-    </div>
 </div>
 
 <mat-menu #userMenu="matMenu" xPosition="before">

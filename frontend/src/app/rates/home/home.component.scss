@@ -1,4 +1,4 @@
-@import '../../../assets//styles//global.scss';
+@import "../../../assets//styles//global.scss";
 
 :host {
     display: block;
@@ -15,11 +15,12 @@
 table {
     min-width: 100%;
     box-shadow: none;
+    margin-bottom: 30px;
 }
 
 .mat-header-cell,
 .mat-cell {
-    padding: 0 25px ;
+    padding: 0 25px;
     text-align: center;
 
     a {
@@ -36,7 +37,6 @@ table {
 }
 
 .home ::ng-deep .mat-form-field {
-
     .mat-form-field-flex {
         padding: 0 10px !important;
     }

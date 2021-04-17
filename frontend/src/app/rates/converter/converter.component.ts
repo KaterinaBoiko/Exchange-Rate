@@ -53,14 +53,14 @@ export class ConverterComponent implements OnInit {
             .map(item => {
               return { code: item.currency, title: item.currency_title };
             })
-            .sort((a, b) => a.code === 'USD' ? -1 : a.code === 'EUR' ? -1 : a.code.localeCompare(b.code));
+            .sort((a, b) => a.code.localeCompare(b.code))
+            .sort(a => a.code === 'USD' ? -1 : a.code === 'EUR' ? -1 : 0);
 
           this.selectedCurrency = this.currencies[0];
           this.amount = 10;
           this.showLoader = false;
         },
         error => {
-          console.log(error);
           this.showLoader = false;
           this.showError(error.message);
         }
@@ -68,6 +68,7 @@ export class ConverterComponent implements OnInit {
   }
 
   convert(): void {
+    this.showLoader = true;
     if (this.amount && this.selectedCurrency && this.selectedBaseCurrency) {
       this.rateService.convert(this.amount, this.selectedCurrency.code, this.selectedBaseCurrency.code)
         .pipe(takeUntil(this.unsubscribe))
@@ -81,7 +82,6 @@ export class ConverterComponent implements OnInit {
             this.showLoader = false;
           },
           error => {
-            console.log(error);
             this.showLoader = false;
             this.showError(error.message);
           }

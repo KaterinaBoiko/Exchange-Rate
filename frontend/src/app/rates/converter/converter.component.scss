@@ -1,4 +1,4 @@
-@import '../../../assets/styles/global.scss';
+@import "../../../assets/styles/global.scss";
 
 :host {
     display: block;
@@ -20,7 +20,7 @@
 }
 
 .inputs {
-    margin: 50px 0;
+    margin: 60px 0;
 
     button {
         margin-left: 20px;
@@ -53,7 +53,7 @@
 .results {
     text-align: center;
     color: white;
-    margin: 50px 0;
+    margin: 70px 0;
 
     .code {
         color: $main;

@@ -8,10 +8,6 @@ import { HomeComponent } from './rates/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/rates', pathMatch: 'full' },
-  {
-    path: '',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
   { path: 'rates', component: HomeComponent },
   { path: 'converter', component: ConverterComponent },
   { path: ':currency', component: CurrencyDetailsComponent },

@@ -1,5 +1,5 @@
-@import './flex';
-@import './paddings_margins.scss';
+@import "./flex";
+@import "./paddings_margins.scss";
 
 $main: #117763;
 $bg-color: #303030;
@@ -56,7 +56,7 @@ $dark: #212121;
 
 #toast-container > div {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
-    opacity: .9;
+    opacity: 0.9;
     font-size: 13px;
 }
 
@@ -71,7 +71,7 @@ $dark: #212121;
 .mat-menu-item,
 .mat-button,
 .mat-form-field {
-    font-family: 'Ubuntu', "Helvetica Neue", sans-serif;
+    font-family: "Ubuntu", "Helvetica Neue", sans-serif;
 }
 
 .mat-menu-content {
@@ -110,10 +110,15 @@ input.mat-input-element {
     }
 }
 
+.mat-calendar-body-in-range::before {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .mat-calendar-body-selected {
     background-color: $main;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
+.mat-progress-spinner circle,
+.mat-spinner circle {
     stroke: $main;
 }

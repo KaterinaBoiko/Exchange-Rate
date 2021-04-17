@@ -35,3 +35,25 @@
     color: white;
     font-size: 18px;
 }
+
+.wrapper ::ng-deep .mat-form-field {
+    .mat-form-field-flex {
+        padding: 0 10px !important;
+    }
+
+    .mat-form-field-infix {
+        padding: 0 !important;
+    }
+
+    .mat-form-field-underline {
+        bottom: 0;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+}
+
+input {
+    color: white;
+}

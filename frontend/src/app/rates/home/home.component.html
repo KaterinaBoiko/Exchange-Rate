@@ -1,5 +1,4 @@
 <div class="home wrapper flex-end">
-
     <div class="flex-end align-center p-b-20">
         <mat-spinner *ngIf="showLoader" class="spinner" diameter="25"></mat-spinner>
         <div class="today" *ngIf="!isCurrentDateToday" (click)="setDateToday()">Go today</div>
@@ -21,7 +20,7 @@
 
         <ng-container matColumnDef="nbu">
             <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> NBU </th>
-            <td mat-cell *matCellDef="let element"> {{element.rate_nb}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.rate_nb | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="privatbank">
@@ -31,12 +30,12 @@
 
         <ng-container matColumnDef="purchase_privat">
             <th mat-header-cell *matHeaderCellDef> Purchase </th>
-            <td mat-cell *matCellDef="let element"> {{element.purchase_privat}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.purchase_privat | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="sale_privat">
             <th mat-header-cell *matHeaderCellDef> Sale </th>
-            <td mat-cell *matCellDef="let element"> {{element.sale_privat}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.sale_privat | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="mono">
@@ -46,17 +45,17 @@
 
         <ng-container matColumnDef="purchase_mono">
             <th mat-header-cell *matHeaderCellDef> Purchase </th>
-            <td mat-cell *matCellDef="let element"> {{element.purchase_mono}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.purchase_mono | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="sale_mono">
             <th mat-header-cell *matHeaderCellDef> Sale </th>
-            <td mat-cell *matCellDef="let element"> {{element.sale_mono}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.sale_mono | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="world">
             <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> World rate </th>
-            <td mat-cell *matCellDef="let element"> {{element.world_rate}} </td>
+            <td mat-cell *matCellDef="let element"> {{ (element.world_rate | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="['currency', 'nbu', 'privatbank', 'mono', 'world']"></tr>

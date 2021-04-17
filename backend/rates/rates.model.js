@@ -24,25 +24,19 @@ exports.convert = (req, res) => {
     const date = formatDate(new Date(), "d.m.yyyy");
     const params = { currency, base_currency };
 
-    axios.get(`https://api.privatbank.ua/p24api/exchange_rates?json&date=${date}`, { params })
-        .then(response => {
-            const { exchangeRate } = response.data;
-            const pair = exchangeRate
-                .find(pair => (pair.baseCurrency === base_currency && pair.currency === currency)
-                    || (pair.baseCurrency === currency && pair.currency === base_currency));
+    sql.query(`select x.rate_nb from exchange_rates x left join currency_pairs p on x.currency_pair_id = p.id where p.base_currency = '${base_currency}' and p.currency = '${currency}' and x.date = '${date}' or p.base_currency = '${currency}' and p.currency = '${base_currency}' and x.date = '${date}'`, (err, result) => {
+        if (err)
+            return res(err.routine);
 
-            const rate_nb = pair.saleRateNB;
-            const revert_base = pair.baseCurrency === base_currency;
-            const body = {
-                result: revert_base ? amount * rate_nb : amount / rate_nb,
-                rate: revert_base ? rate_nb : 1 / rate_nb,
-                reverted_rate: revert_base ? 1 / rate_nb : rate_nb
-            };
-            res(null, body);
-        })
-        .catch(err => {
-            res(err);
-        });
+        const rate_nb = result.rows[0].rate_nb;
+        const revert_base = base_currency === 'UAH';
+        const body = {
+            result: revert_base ? amount * rate_nb : amount / rate_nb,
+            rate: revert_base ? rate_nb : 1 / rate_nb,
+            reverted_rate: revert_base ? 1 / rate_nb : rate_nb
+        };
+        res(null, body);
+    });
 };
 
 exports.getCurrencyPairs = (req, res) => {
@@ -59,11 +53,11 @@ exports.getCurrencyDetails = (req, res) => {
     const { currency } = req.params;
     const { from, to } = getFormatedtFromToDates(req);
 
-    sql.query(`select * from exchange_rates where currency_pair_id = (select id from currency_pairs where base_currency = 'UAH' and currency = '${currency}' and date >= '${from}' and date < '${to}')`, (err, data) => {
+    sql.query(`select x.*, c.* from exchange_rates x left join currency_pairs p on x.currency_pair_id = p.id left join currencies c on p.currency = c.code where x.currency_pair_id = (select id from currency_pairs p where p.base_currency = 'UAH' and p.currency = '${currency}') and x.date >= '${from}' and x.date < '${to}'`, (err, data) => {
         if (err)
             return res(err.routine);
 
-        return res(null, { data: data.rows, currency });
+        return res(null, data.rows);
     });
 };
 

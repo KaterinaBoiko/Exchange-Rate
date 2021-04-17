@@ -2,14 +2,27 @@
     <mat-spinner *ngIf="showLoader" class="spinner" diameter="40"></mat-spinner>
 
     <div class="title" *ngIf="details">
-        <span class="code">{{details.currency}}</span>
-        <!-- <span> - {{details.title}}</span>
-        <span *ngIf="details.ukr_title"> - {{details.ukr_title}}</span> -->
+        <span class="code">{{details[0].code}}</span>
+        <span> - {{details[0].title}}</span>
+        <span *ngIf="details[0].ukr_title"> - {{details[0].ukr_title}}</span>
+    </div>
+
+    <div class="picker flex-end align-center p-b-20">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
+                <input matStartDate [(ngModel)]="startDate" (focus)="picker.open()" placeholder="Start date">
+                <input matEndDate [(ngModel)]="endDate" (dateChange)="getCurrencyDetails()" (focus)="picker.open()"
+                    placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
     </div>
 
     <div *ngIf="chartDetails" class="chart">
-        <canvas baseChart [chartType]="chartDetails.type" [colors]="colors" [datasets]="chartDetails.datasets"
-            [labels]="chartDetails.labels" [options]="chartDetails.options">
+        <canvas baseChart [chartType]="chartDetails.type" height="100vh" [colors]="colors"
+            [datasets]="chartDetails.datasets" [labels]="chartDetails.labels" [options]="chartDetails.options">
         </canvas>
     </div>
 
