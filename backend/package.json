@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "parsers": "node parsers/nbu.js && node parsers/privat.js && node parsers/mono.js && node parsers/currency-layer.js"
+    "parsers": "node parsers/nbu.js && node parsers/privat.js && node parsers/mono.js && node parsers/currency-layer.js && node parsers/fixer.js"
   },
   "author": "",
   "license": "ISC",

@@ -53,7 +53,7 @@ exports.getCurrencyDetails = (req, res) => {
     const { currency } = req.params;
     const { from, to } = getFormatedtFromToDates(req);
 
-    sql.query(`select x.*, c.* from exchange_rates x left join currency_pairs p on x.currency_pair_id = p.id left join currencies c on p.currency = c.code where x.currency_pair_id = (select id from currency_pairs p where p.base_currency = 'UAH' and p.currency = '${currency}') and x.date >= '${from}' and x.date < '${to}'`, (err, data) => {
+    sql.query(`select x.*, c.* from exchange_rates x left join currency_pairs p on x.currency_pair_id = p.id left join currencies c on p.currency = c.code where x.currency_pair_id = (select id from currency_pairs p where p.base_currency = 'UAH' and p.currency = '${currency}') and x.date >= '${from}' and x.date <= '${to}'`, (err, data) => {
         if (err)
             return res(err.routine);
 

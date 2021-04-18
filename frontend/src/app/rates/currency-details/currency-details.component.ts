@@ -77,13 +77,14 @@ export class CurrencyDetailsComponent implements OnInit {
   }
 
   setChartDetails(): void {
-    const datasets = [
+    let datasets = [
       { label: 'NBU rate', data: [], fill: false },
       { label: 'PrivatBank purchase', data: [], fill: false },
       { label: 'PrivatBank sale', data: [], fill: false },
       { label: 'Mono purchase', data: [], fill: false },
       { label: 'Mono sale', data: [], fill: false },
-      { label: 'World rate', data: [], fill: false }
+      { label: 'Currency Layer rate', data: [], fill: false },
+      { label: 'Fixer rate', data: [], fill: false },
     ];
     const labels = [];
     this.details.forEach(row => {
@@ -92,12 +93,14 @@ export class CurrencyDetailsComponent implements OnInit {
       datasets[2].data.push(row.sale_privat);
       datasets[3].data.push(row.purchase_mono);
       datasets[4].data.push(row.sale_mono);
-      datasets[5].data.push(row.world_rate);
+      datasets[5].data.push(row.layer_rate);
+      datasets[6].data.push(row.fixer_rate);
 
       labels.push(formatDate(row.date, 'dd.MM.yyyy', 'en-US'));
     });
 
     const options = this.setOptions(this.details);
+    datasets = datasets.filter(dataset => dataset.data.some(data => data));
 
     this.chartDetails = new ChartConfigs(datasets, labels, options);
   }

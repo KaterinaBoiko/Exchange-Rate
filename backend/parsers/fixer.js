@@ -4,16 +4,15 @@ const { sql, endConnection } = require('../database/connection');
 const { DATE } = require('./date');
 
 const date = formatDate(DATE, "yyyy-mm-dd");
-console.log('Currency layer', date);;
+console.log('Fixer', date);
 
 (function (date) {
-    axios.get(`http://api.currencylayer.com/historical?access_key=d53eddc8bbd6f17586d4d83faa6a8740&date=${date}`)
+    axios.get(`http://data.fixer.io/api/${date}?access_key=6679e8357372364e708cea970900a083`)
         .then(response => {
             const { data } = response;
-            const uah = data.quotes.USDUAH;
-            for (pair in data.quotes) {
-                const currency = pair.substr(3);
-                const rate = data.quotes[pair];
+            const uah = data.rates.UAH;
+            for (currency in data.rates) {
+                const rate = data.rates[currency];
                 if (currency && rate && uah) {
                     sql.query(`select id from currency_pairs where base_currency='UAH' and currency = '${currency}'`, (err, result) => {
                         if (err)
@@ -22,7 +21,7 @@ console.log('Currency layer', date);;
                         if (!result.rowCount)
                             return;
 
-                        sql.query(`update exchange_rates set layer_rate = ${uah / rate} where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err, r) => {
+                        sql.query(`update exchange_rates set fixer_rate = ${uah / rate} where currency_pair_id = ${result.rows[0].id} and date = '${date}'`, (err, r) => {
                             if (err)
                                 return console.log(err);
                         });
