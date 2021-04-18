@@ -1,8 +1,8 @@
 <div class="home wrapper flex-end">
-    <div class="flex-end align-center p-b-20">
+    <div class="flex-end align-center p-b-10">
         <mat-spinner *ngIf="showLoader" class="spinner" diameter="25"></mat-spinner>
         <div class="today" *ngIf="!isCurrentDateToday" (click)="setDateToday()">Go today</div>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="datepicker">
             <mat-label>Choose a date</mat-label>
             <input matInput [matDatepicker]="picker" [value]="date" [max]="date" (dateInput)="onDateChange($event)">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -69,4 +69,6 @@
             *matRowDef="let row; columns: ['currency','nbu', 'purchase_privat', 'sale_privat', 'purchase_mono', 'sale_mono', 'layer', 'fixer']">
         </tr>
     </table>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
 </div>

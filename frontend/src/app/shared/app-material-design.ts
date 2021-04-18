@@ -11,6 +11,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
     exports: [
         MatCardModule,
@@ -24,7 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatDatepickerModule,
         MatNativeDateModule,
         MatProgressSpinnerModule,
-        MatSelectModule
+        MatSelectModule,
+        MatPaginatorModule
     ]
 })
 

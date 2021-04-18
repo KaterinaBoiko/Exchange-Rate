@@ -15,6 +15,10 @@
 table {
     min-width: 100%;
     box-shadow: none;
+}
+
+.mat-paginator {
+    width: 100%;
     margin-bottom: 30px;
 }
 
@@ -36,7 +40,7 @@ table {
     cursor: pointer;
 }
 
-.home ::ng-deep .mat-form-field {
+.home ::ng-deep .datepicker {
     .mat-form-field-flex {
         padding: 0 10px !important;
     }
