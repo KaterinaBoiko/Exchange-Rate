@@ -9,12 +9,19 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class RateService {
-
   apiUrl = environment.apiUrl;
-
+  defaultCurrencies: string[] = ['USD', 'EUR', 'PLN'];
   constructor(
     private http: HttpClient
   ) { }
+
+  get selectedCurrencies(): string[] {
+    return JSON.parse(localStorage.getItem('currencies')) || this.defaultCurrencies;
+  }
+
+  setSelectedCurrencies(currencies: string[]): void {
+    localStorage.setItem('currencies', JSON.stringify(currencies));
+  }
 
   getRateByDate(date: string): Observable<any> {
     return this.http.get(
@@ -24,6 +31,11 @@ export class RateService {
   getCurrencyPairs(): Observable<any> {
     return this.http.get(
       `${this.apiUrl}/rates/currency-pairs`);
+  }
+
+  getCurrencies(): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/rates/currencies`);
   }
 
   getCurrentNBURate(): Observable<any> {
@@ -40,6 +52,11 @@ export class RateService {
 
     return this.http.get(
       `${this.apiUrl}/rates/details/${currency}`, { params });
+  }
+
+  getCurrencyDetailsByDate(currency: string, date: string): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/rates/date-details/${currency}/${date}`);
   }
 
   convert(amount: number, currency: string, base_currency: string): Observable<any> {

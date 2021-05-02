@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="currencies">
+        <span class="code" [class.selected]="currency === currentCurrency.code" *ngFor="let currency of currencies"
+            (click)="selectCurrency(currency)">{{currency}}</span>
+    </div>
+    <mat-spinner *ngIf="showLoader" class="spinner" diameter="40"></mat-spinner>
+
+    <div class="title" *ngIf="currentCurrency?.data">
+        <span> {{currentCurrency.data.title}}</span>
+        <span *ngIf="currentCurrency.data.ukr_title"> - {{currentCurrency.data.ukr_title}}</span>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> HJHKJLj </th>
+        <td mat-cell *matCellDef="let element">
+            <a [routerLink]="'/' + element.currency"> {{element.id}} </a>
+        </td>
+        <ng-container matColumnDef="bank">
+            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Currency </th>
+            <td mat-cell *matCellDef="let element">
+                <a [routerLink]="'/' + element.currency"> {{element.id}} </a>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['bank']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['bank']">
+        </tr>
+    </table>
+</div>

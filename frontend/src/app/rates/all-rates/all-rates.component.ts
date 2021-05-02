@@ -11,11 +11,11 @@ import { takeUntil } from 'rxjs/operators';
 import { RateService } from '../../core/services/rate.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-all-rates',
+  templateUrl: './all-rates.component.html',
+  styleUrls: ['./all-rates.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class AllRatesComponent implements OnInit {
   private unsubscribe = new Subject<void>();
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     this.getRateByDate();
   }
 
-  getRateByDate() {
+  getRateByDate(): void {
     this.showLoader = true;
     const dateString = formatDate(this.date, 'dd.MM.yyyy', 'en-US');
     this.rateService.getRateByDate(dateString)
@@ -74,5 +74,4 @@ export class HomeComponent implements OnInit {
   showError(error: string) {
     this.toastr.error(error, 'Error');
   }
-
 }

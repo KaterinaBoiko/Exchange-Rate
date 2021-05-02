@@ -49,6 +49,14 @@ exports.getCurrencyPairs = (req, res) => {
         });
 };
 
+exports.getCurrencies = (req, res) => {
+    sql.query(`select p.currency, c.title from currency_pairs p left join currencies c on p.currency = c.code where currency <> 'UAH'`, (err, data) => {
+        if (err)
+            return res(err.routine);
+        return res(null, data.rows);
+    });
+};
+
 exports.getCurrencyDetails = (req, res) => {
     const { currency } = req.params;
     const { from, to } = getFormatedtFromToDates(req);
@@ -58,6 +66,17 @@ exports.getCurrencyDetails = (req, res) => {
             return res(err.routine);
 
         return res(null, data.rows);
+    });
+};
+
+exports.getCurrencyDetailsByDate = (req, res) => {
+    const { currency, date } = req.params;
+
+    sql.query(`select x.*, c.* from exchange_rates x left join currency_pairs p on x.currency_pair_id = p.id left join currencies c on p.currency = c.code where x.currency_pair_id = (select id from currency_pairs p where p.base_currency = 'UAH' and p.currency = '${currency}') and x.date = '${date}'`, (err, data) => {
+        if (err)
+            return res(err.routine);
+
+        return res(null, data.rows[0]);
     });
 };
 

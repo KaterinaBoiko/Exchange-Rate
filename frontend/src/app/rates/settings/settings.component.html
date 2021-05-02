@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <p class="title">
+        Choose currencies:
+    </p>
+    <mat-selection-list #list [(ngModel)]="selectedCurrencies" (ngModelChange)="onChangeSelectedCurrencies()">
+        <mat-list-option *ngFor="let item of allCurrencies" [value]="item.currency" checkboxPosition="before">
+            {{item.currency}} - {{item.title}}
+        </mat-list-option>
+    </mat-selection-list>
+</div>

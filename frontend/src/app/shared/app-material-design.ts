@@ -12,7 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatListModule } from '@angular/material/list';
 @NgModule({
     exports: [
         MatCardModule,
@@ -27,7 +27,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatNativeDateModule,
         MatProgressSpinnerModule,
         MatSelectModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatListModule
     ]
 })
 

@@ -8,9 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { HomeComponent } from './rates/home/home.component';
+import { AllRatesComponent } from './rates/all-rates/all-rates.component';
+import { MainComponent } from './rates/main/main.component';
 import { ConverterComponent } from './rates/converter/converter.component';
 import { CurrencyDetailsComponent } from './rates/currency-details/currency-details.component';
+import { SettingsComponent } from './rates/settings/settings.component';
 
 const MY_FORMATS = {
   parse: {
@@ -27,9 +29,11 @@ const MY_FORMATS = {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    MainComponent,
+    AllRatesComponent,
     ConverterComponent,
-    CurrencyDetailsComponent
+    CurrencyDetailsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

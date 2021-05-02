@@ -16,8 +16,26 @@ exports.getCurrencyPairs = (req, res, next) => {
     });
 };
 
+exports.getCurrencies = (req, res, next) => {
+    ratesModel.getCurrencies(req, (err, result) => {
+        if (err)
+            return res.status(err.status || 500).json({ message: err.data });
+        return res.status(200).json(result);
+    });
+};
+
 exports.getCurrencyDetails = (req, res, next) => {
     ratesModel.getCurrencyDetails(req, (err, result) => {
+        if (err)
+            return res.status(err.status || 500).json({ message: err.data });
+
+        const response = typeof result === 'string' ? { message: result } : result;
+        return res.status(200).json(response);
+    });
+};
+
+exports.getCurrencyDetailsByDate = (req, res, next) => {
+    ratesModel.getCurrencyDetailsByDate(req, (err, result) => {
         if (err)
             return res.status(err.status || 500).json({ message: err.data });
 

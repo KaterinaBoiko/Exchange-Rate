@@ -1,0 +1,46 @@
+@import "../../../assets//styles//global.scss";
+
+:host {
+    display: block;
+    min-height: calc(100% - 150px);
+    background-color: $bg-color;
+    padding-top: 30px;
+}
+
+.wrapper {
+    margin: 0 auto;
+    max-width: 70%;
+}
+
+.spinner {
+    margin: 20px auto;
+}
+
+.currencies .code {
+    margin-right: 20px;
+    cursor: pointer;
+
+    &.selected {
+        color: $main;
+        text-decoration: underline;
+    }
+}
+
+.title {
+    margin: 10px 0;
+    color: white;
+    font-size: 20px;
+}
+
+.code {
+    color: white;
+    font-weight: 900;
+    font-size: 24px;
+}
+
+.no-data {
+    text-align: center;
+    margin: 20px;
+    color: white;
+    font-size: 18px;
+}

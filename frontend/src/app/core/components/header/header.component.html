@@ -1,11 +1,13 @@
 <div class="space-between align-center">
     <div class="menu">
-        <div class="logo" routerLink="/rates">
+        <div class="logo" routerLink="/main">
             <mat-icon>trending_up</mat-icon>Exchange rates
         </div>
-        <a routerLink="/rates">Rates</a>
+        <a routerLink="/main">Main</a>
+        <a routerLink="/rates">All Rates</a>
         <a routerLink="/converter">Converter</a>
     </div>
+    <mat-icon class="settings" routerLink="/settings">settings</mat-icon>
 </div>
 
 <mat-menu #userMenu="matMenu" xPosition="before">
