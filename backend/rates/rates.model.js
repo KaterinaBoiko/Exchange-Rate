@@ -1,6 +1,7 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
 const { sql } = require('../database/connection');
+const forecastServer = 'http://127.0.0.1:8000';
 
 exports.getRateByDate = (req, res) => {
     const { date } = req.params;
@@ -76,9 +77,80 @@ exports.getCurrencyDetailsByDate = (req, res) => {
         if (err)
             return res(err.routine);
 
-        return res(null, data.rows[0]);
+        const response = {
+            bankData: composeBankData(data.rows[0]),
+            otherData: [
+                {
+                    apiName: 'NBU',
+                    rate: data.rows[0].rate_nb
+                },
+                {
+                    apiName: 'Currency Layer',
+                    rate: data.rows[0].layer_rate
+                },
+                {
+                    apiName: 'Fixer',
+                    rate: data.rows[0].fixer_rate
+                }
+            ]
+        };
+        return res(null, response);
     });
 };
+
+exports.forecastRate = (req, res) => {
+    axios.get(`${forecastServer}`, {
+        params: {
+            forecast: req.query.currency,
+            period: req.query.period
+        }
+    })
+        .then(response => {
+            const forecast = response.data.map(row => {
+                return {
+                    forecast: row.predicted,
+                    date: new Date(row.date).toISOString()
+                };
+            });
+            res(null, forecast);
+        })
+        .catch(err => {
+            res(err.response);
+        });
+};
+
+function composeBankData(details) {
+    const bankData = [
+        {
+            bank: 'PrivatBank',
+            purchase: details.purchase_privat,
+            sale: details.sale_privat
+        },
+        {
+            bank: 'Monobank',
+            purchase: details.purchase_mono,
+            sale: details.sale_mono
+        },
+    ];
+    return [
+        ...bankData,
+        {
+            bank: 'Minimum',
+            purchase: bankData.reduce((min, rate) => rate.purchase && rate.purchase < min ? rate.purchase : min, bankData.find(rate => rate.purchase).purchase),
+            sale: bankData.reduce((min, rate) => rate.sale && rate.sale < min ? rate.sale : min, bankData.find(rate => rate.sale).sale)
+        },
+        {
+            bank: 'Average',
+            purchase: bankData.reduce((total, next) => total + next.purchase, 0) / bankData.filter(rate => rate.purchase).length,
+            sale: bankData.reduce((total, next) => total + next.sale, 0) / bankData.filter(rate => rate.sale).length
+        },
+        {
+            bank: 'Maximum',
+            purchase: bankData.reduce((max, rate) => rate.purchase && rate.purchase > max ? rate.purchase : max, bankData.find(rate => rate.purchase).purchase),
+            sale: bankData.reduce((max, rate) => rate.sale && rate.sale > max ? rate.sale : max, bankData.find(rate => rate.sale).sale)
+        }
+    ];
+}
 
 function getFormatedtFromToDates(req) {
     let { from, to } = req.query;

@@ -38,9 +38,45 @@
     font-size: 24px;
 }
 
+.bank-details {
+    width: 50%;
+}
+
+.other-details {
+    width: 40%;
+}
+
+.table-title {
+    color: white;
+    margin: 15px 0 5px 0;
+}
+
+.mat-table {
+    width: 100%;
+    height: fit-content;
+}
+
+.mat-header-row {
+    height: 48px;
+}
+
+.mat-row {
+    height: 42px;
+}
+
+.mat-cell.min {
+    border-top: 1px solid rgba(255, 255, 255, 0.72);
+}
+
 .no-data {
     text-align: center;
     margin: 20px;
     color: white;
     font-size: 18px;
+}
+
+.forecast-panel {
+    box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+    border-radius: 0;
+    margin-top: 30px;
 }

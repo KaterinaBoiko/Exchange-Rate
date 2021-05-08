@@ -20,6 +20,7 @@ def train(currency='USD'):
     arima = ARIMAC(data, train_df, test_df, 'rate_nb')
     arima.getBestParamsARIMA()
     rmse, results = arima.modelTrain()
+    print(results)
     print('Best order = {}'.format(arima.order))
     print('RMSE = {}'.format(rmse))
 

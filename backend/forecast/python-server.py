@@ -16,7 +16,6 @@ class Server(BaseHTTPRequestHandler):
         self._set_headers()
         if(self.path.find("train") != -1):
             currency = furl(self.path).args['train']
-
             import trainARIMA
             trainARIMA.train(currency)
             self.wfile.write(json.dumps(
@@ -24,7 +23,6 @@ class Server(BaseHTTPRequestHandler):
         elif(self.path.find("forecast") != -1):
             currency = furl(self.path).args['forecast']
             period = furl(self.path).args['period']
-
             import forecastARIMA
             results = forecastARIMA.forecast(currency, int(period))
             self.wfile.write(results.to_json(
@@ -34,8 +32,8 @@ class Server(BaseHTTPRequestHandler):
                 {'message': 'Invalid request'}).encode(encoding='utf_8'))
 
 
-server_address = ('', 8000)
+server_address = ('', 8080)
 httpd = HTTPServer(server_address, Server)
 
-print('Listening at http://127.0.0.1:8000/', flush=True)
+print('Listening at http://127.0.0.1:8000', flush=True)
 httpd.serve_forever()

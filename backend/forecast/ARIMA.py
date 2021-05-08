@@ -20,12 +20,12 @@ class ARIMAC:
         self.order = ''
 
     def getBestParamsARIMA(self):
-        # p = range(6, 15)
-        # q = range(6, 15)
-        # d = range(0, 2)
-        p = range(5, 10)
+        p = range(5, 12)
+        q = range(5, 12)
         d = range(0, 2)
-        q = range(4, 7)
+        # p = range(5, 10)
+        # d = range(0, 2)
+        # q = range(4, 7)
         pdq = list(itertools.product(p, d, q))
         params_ = pd.DataFrame()
         for param in pdq:

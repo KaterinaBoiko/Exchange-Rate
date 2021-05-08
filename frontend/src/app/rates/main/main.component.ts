@@ -22,7 +22,8 @@ export class MainComponent implements OnInit {
   date: Date = localStorage.getItem('date') ? new Date(localStorage.getItem('date')) : new Date();
   showLoader: boolean = false;
   isCurrentDateToday: boolean = true;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  bankDataSource: MatTableDataSource<any> = new MatTableDataSource();
+  otherDataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   constructor(
     private toastr: ToastrService,
@@ -49,7 +50,8 @@ export class MainComponent implements OnInit {
       .subscribe(
         data => {
           this.currentCurrency.data = data;
-          this.dataSource = new MatTableDataSource<any>(data);
+          this.bankDataSource = this.currentCurrency.data.bankData;
+          this.otherDataSource = this.currentCurrency.data.otherData;
           this.showLoader = false;
         },
         error => {

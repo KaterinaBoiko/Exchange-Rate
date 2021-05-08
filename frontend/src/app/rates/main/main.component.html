@@ -10,19 +10,58 @@
         <span *ngIf="currentCurrency.data.ukr_title"> - {{currentCurrency.data.ukr_title}}</span>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> HJHKJLj </th>
-        <td mat-cell *matCellDef="let element">
-            <a [routerLink]="'/' + element.currency"> {{element.id}} </a>
-        </td>
-        <ng-container matColumnDef="bank">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Currency </th>
-            <td mat-cell *matCellDef="let element">
-                <a [routerLink]="'/' + element.currency"> {{element.id}} </a>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['bank']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['bank']">
-        </tr>
-    </table>
+    <div class="tables space-between">
+        <div class="bank-details">
+            <p class="table-title">Banks' exchange rates in Ukraine</p>
+            <table mat-table [dataSource]="bankDataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="bank">
+                    <th mat-header-cell *matHeaderCellDef> Bank </th>
+                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{ element.bank }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="purchase">
+                    <th mat-header-cell *matHeaderCellDef> Purchase </th>
+                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{
+                        (element.purchase | number:'0.1-2') || '-' }} </td>
+                </ng-container>
+                <ng-container matColumnDef="sale">
+                    <th mat-header-cell *matHeaderCellDef> Sale </th>
+                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{ (element.sale |
+                        number:'0.1-2') || '-' }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['bank', 'purchase', 'sale']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['bank', 'purchase', 'sale']">
+                </tr>
+            </table>
+        </div>
+
+        <div class="other-details">
+            <p class="table-title">Exchange rates from other websites</p>
+            <table mat-table [dataSource]="otherDataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="api">
+                    <th mat-header-cell *matHeaderCellDef> Website </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.apiName }} </td>
+                </ng-container>
+                <ng-container matColumnDef="rate">
+                    <th mat-header-cell *matHeaderCellDef> Rate </th>
+                    <td mat-cell *matCellDef="let element"> {{ (element.rate | number:'0.1-2') || '-' }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['api', 'rate']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['api', 'rate']">
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <mat-expansion-panel class="forecast-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Self aware panel
+            </mat-panel-title>
+            <mat-panel-description>
+                Extra text
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
 </div>
