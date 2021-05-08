@@ -48,3 +48,5 @@ Thumbs.db
 # env specifics
 docker-compose.local.yml
 local.env
+
+**/forecast/frc-env
