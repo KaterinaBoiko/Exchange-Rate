@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -15,17 +16,28 @@ export class SettingsComponent implements OnInit {
   private unsubscribe = new Subject<void>();
 
   showLoader: boolean = false;
-  allCurrencies: { currency: string, title: string; };
+  selectedLanguage: string;
+  allCurrencies: { currency: string, en_title: string; ua_title: string; ru_title: string; };
   selectedCurrencies: string[];
+  currTitle: string;
 
   constructor(
     private toastr: ToastrService,
+    private translateService: TranslateService,
     private rateService: RateService
   ) { }
 
   ngOnInit(): void {
+    this.selectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
     this.selectedCurrencies = this.rateService.selectedCurrencies;
     this.getCurrencies();
+    this.currTitle = `${this.translateService.currentLang}_title`;
+  }
+
+  onChangeLanguage(language: string): void {
+    this.translateService.use(language);
+    this.currTitle = `${language}_title`;
+    localStorage.setItem('language', language);
   }
 
   onChangeSelectedCurrencies(): void {

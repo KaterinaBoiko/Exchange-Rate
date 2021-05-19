@@ -3,17 +3,17 @@
 
     <div class="title" *ngIf="details">
         <span class="code">{{details[0].code}}</span>
-        <span> - {{details[0].title}}</span>
-        <span *ngIf="details[0].ukr_title"> - {{details[0].ukr_title}}</span>
+        <span> - {{details[0][currTitle]}}</span>
     </div>
 
     <div class="picker flex-end align-center p-b-20">
         <mat-form-field appearance="fill" class="datepicker">
-            <mat-label>Enter a date range</mat-label>
+            <mat-label>{{ 'DETAILS.DATE_RANGE' | translate }}</mat-label>
             <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-                <input matStartDate [(ngModel)]="startDate" (focus)="picker.open()" placeholder="Start date">
+                <input matStartDate [(ngModel)]="startDate" (focus)="picker.open()"
+                    [placeholder]="'DETAILS.START_DATE' | translate">
                 <input matEndDate [(ngModel)]="endDate" (dateChange)="getCurrencyDetails()" (focus)="picker.open()"
-                    placeholder="End date">
+                    [placeholder]="'DETAILS.END_DATE' | translate">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
@@ -26,5 +26,5 @@
         </canvas>
     </div>
 
-    <p class="no-data" *ngIf="noData && !showLoader">No data for chart</p>
+    <p class="no-data" *ngIf="noData && !showLoader">{{ 'DETAILS.NO_DATA' | translate }}</p>
 </div>

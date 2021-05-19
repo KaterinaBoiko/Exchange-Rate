@@ -59,6 +59,20 @@ export class RateService {
       `${this.apiUrl}/rates/date-details/${currency}/${date}`);
   }
 
+  getForecastBaseRate(currency: string, dateTo: string): Observable<any> {
+    const params = new HttpParams().append('to', dateTo);
+    return this.http.get(
+      `${this.apiUrl}/rates/forecast-base/${currency}`, { params });
+  }
+
+  getForecast(currency: string, period: number): Observable<any> {
+    const params = new HttpParams()
+      .append('currency', currency)
+      .append('period', period.toString());
+    return this.http.get(
+      `${this.apiUrl}/rates/forecast`, { params });
+  }
+
   convert(amount: number, currency: string, base_currency: string): Observable<any> {
     const params = new HttpParams()
       .append('amount', amount.toString())

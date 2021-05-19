@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -15,11 +16,11 @@ export class ConverterComponent implements OnInit {
   private unsubscribe = new Subject<void>();
 
   showLoader: boolean = false;
-  currencies: { code: string; title: number; }[] = [];
-  baseCurrencies: { code: string; title: number; }[] = [];
+  currencies: { code: string, en_title: string; ua_title: string; ru_title: string; }[] = [];
+  baseCurrencies: { code: string, en_title: string; ua_title: string; ru_title: string; }[] = [];
 
-  selectedCurrency: { code: string; title: number; };
-  selectedBaseCurrency: { code: string; title: number; };
+  selectedCurrency: { code: string, en_title: string; ua_title: string; ru_title: string; };
+  selectedBaseCurrency: { code: string, en_title: string; ua_title: string; ru_title: string; };
   amount: number;
 
   rateNBU: number;
@@ -27,13 +28,17 @@ export class ConverterComponent implements OnInit {
   totalAmount: number;
   amountCopy: number;
 
+  currTitle: string;
+
   constructor(
     private toastr: ToastrService,
-    private rateService: RateService
+    private rateService: RateService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.getCurrencyPairs();
+    this.currTitle = `${this.translateService.currentLang}_title`;
   }
 
   ngOnDestroy(): void {
@@ -47,11 +52,11 @@ export class ConverterComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
-          this.baseCurrencies.push({ code: data[0].base_currency, title: data[0].base_currency_title });
+          this.baseCurrencies.push({ code: data[0].base_currency, en_title: data[0].en_base_title, ua_title: data[0].ua_base_title, ru_title: data[0].ru_base_title });
           this.selectedBaseCurrency = this.baseCurrencies[0];
           this.currencies = data
             .map(item => {
-              return { code: item.currency, title: item.currency_title };
+              return { code: item.currency, en_title: item.en_title, ua_title: item.ua_title, ru_title: item.ru_title };
             })
             .sort((a, b) => a.code.localeCompare(b.code))
             .sort(a => a.code === 'USD' ? -1 : a.code === 'EUR' ? -1 : 0);

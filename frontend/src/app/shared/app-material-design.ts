@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
+
 @NgModule({
     exports: [
         MatCardModule,
@@ -30,7 +32,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
         MatSelectModule,
         MatPaginatorModule,
         MatListModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatRadioModule
     ]
 })
 

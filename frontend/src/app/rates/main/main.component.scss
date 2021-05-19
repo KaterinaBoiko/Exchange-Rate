@@ -4,7 +4,7 @@
     display: block;
     min-height: calc(100% - 150px);
     background-color: $bg-color;
-    padding-top: 30px;
+    padding: 30px 0;
 }
 
 .wrapper {
@@ -32,6 +32,11 @@
     font-size: 20px;
 }
 
+.link {
+    color: white;
+    font-size: 14px;
+}
+
 .code {
     color: white;
     font-weight: 900;
@@ -39,11 +44,12 @@
 }
 
 .bank-details {
-    width: 50%;
+    margin-right: 30px;
+    flex: 60%;
 }
 
 .other-details {
-    width: 40%;
+    flex: 35%;
 }
 
 .table-title {
@@ -79,4 +85,27 @@
     box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
     border-radius: 0;
     margin-top: 30px;
+
+    .loading-forecast {
+        font-size: 14px;
+        color: white;
+    }
+
+    .top {
+        align-items: baseline;
+    }
+}
+
+.select-period ::ng-deep {
+    .mat-form-field-flex {
+        padding: 0 10px;
+    }
+
+    .mat-form-field-label {
+        margin-top: -3px;
+    }
+
+    .mat-select-arrow-wrapper {
+        transform: translateY(-15%);
+    }
 }

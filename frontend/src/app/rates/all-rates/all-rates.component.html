@@ -1,9 +1,10 @@
 <div class="home wrapper flex-end">
     <div class="flex-end align-center p-b-10">
         <mat-spinner *ngIf="showLoader" class="spinner" diameter="25"></mat-spinner>
-        <div class="today" *ngIf="!isCurrentDateToday" (click)="setDateToday()">Go today</div>
+        <div class="today" *ngIf="!isCurrentDateToday" (click)="setDateToday()">{{ 'ALL_RATES.GO_TODAY' | translate }}
+        </div>
         <mat-form-field appearance="fill" class="datepicker">
-            <mat-label>Choose a date</mat-label>
+            <mat-label>{{ 'ALL_RATES.CHOOSE_DATE' | translate }}</mat-label>
             <input matInput [matDatepicker]="picker" [value]="date" [max]="date" (dateInput)="onDateChange($event)">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -12,54 +13,54 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="currency">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Currency </th>
+            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> {{ 'ALL_RATES.CURRENCY' | translate }} </th>
             <td mat-cell *matCellDef="let element">
                 <a [routerLink]="'/' + element.currency"> {{element.currency}} </a>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="nbu">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> NBU </th>
+            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> {{ 'WEBSITES.NBU' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.rate_nb | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="privatbank">
-            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> PrivatBank </th>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> {{ 'BANKS.PRIVAT' | translate }} </th>
             <td mat-cell *matCellDef="let element"> </td>
         </ng-container>
 
         <ng-container matColumnDef="purchase_privat">
-            <th mat-header-cell *matHeaderCellDef> Purchase </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'ALL_RATES.PURCHASE' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.purchase_privat | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="sale_privat">
-            <th mat-header-cell *matHeaderCellDef> Sale </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'ALL_RATES.SALE' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.sale_privat | number:'0.1-2') || '-' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="mono">
-            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Mono </th>
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> {{ 'BANKS.MONO' | translate }} </th>
             <td mat-cell *matCellDef="let element"> </td>
         </ng-container>
 
         <ng-container matColumnDef="purchase_mono">
-            <th mat-header-cell *matHeaderCellDef> Purchase </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'ALL_RATES.PURCHASE' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.purchase_mono | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="sale_mono">
-            <th mat-header-cell *matHeaderCellDef> Sale </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'ALL_RATES.SALE' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.sale_mono | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="layer">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Currency Layer rate </th>
+            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> {{ 'WEBSITES.CURRENCY_LAYER' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.layer_rate | number:'0.1-2') || '-'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="fixer">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Fixer rate </th>
+            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> {{ 'WEBSITES.FIXER' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ (element.fixer_rate | number:'0.1-2') || '-'}} </td>
         </ng-container>
 

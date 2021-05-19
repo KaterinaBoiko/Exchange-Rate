@@ -20,6 +20,10 @@ table {
 .mat-paginator {
     width: 100%;
     margin-bottom: 30px;
+
+    ::ng-deep .mat-paginator-page-size-label {
+        display: none !important;
+    }
 }
 
 .mat-header-cell,

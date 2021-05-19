@@ -1,38 +1,38 @@
 <div class="wrapper">
     <p class="title">
-        Convert Ukrainian Hryvnia (NBU rate)
+        {{ 'CONVERTER.TITLE' | translate }}
     </p>
 
     <div class="inputs space-evenly align-center">
         <mat-form-field appearance="outline">
-            <mat-label>Amount</mat-label>
+            <mat-label>{{ 'CONVERTER.AMOUNT' | translate }}</mat-label>
             <input matInput type="number" [(ngModel)]="amount" (change)="convert()">
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>From</mat-label>
+        <mat-form-field appearance="outline" *ngIf="selectedCurrency">
+            <mat-label>{{ 'CONVERTER.FROM' | translate }}</mat-label>
             <mat-select [(ngModel)]="selectedCurrency" (selectionChange)="convert()">
                 <mat-select-trigger>
                     <p class="code">{{selectedCurrency?.code}}</p>
-                    <p class="title">{{selectedCurrency?.title}}</p>
+                    <p class="title">{{selectedCurrency[currTitle]}}</p>
                 </mat-select-trigger>
                 <mat-option *ngFor="let currency of currencies" [value]="currency">
-                    {{currency.code}} - {{currency.title}}
+                    {{currency.code}} - {{currency[currTitle]}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-icon class="icon" (click)="swapCurrencies()">swap_horiz</mat-icon>
 
-        <mat-form-field appearance="outline">
-            <mat-label>To</mat-label>
+        <mat-form-field appearance="outline" *ngIf="selectedBaseCurrency">
+            <mat-label>{{ 'CONVERTER.TO' | translate }}</mat-label>
             <mat-select [(ngModel)]="selectedBaseCurrency" (selectionChange)="convert()">
                 <mat-select-trigger>
                     <p class="code">{{selectedBaseCurrency?.code}}</p>
-                    <p class="title">{{selectedBaseCurrency?.title}}</p>
+                    <p class="title">{{selectedBaseCurrency[currTitle]}}</p>
                 </mat-select-trigger>
                 <mat-option *ngFor="let currency of baseCurrencies" [value]="currency">
-                    {{currency.code}} - {{currency.title}}
+                    {{currency.code}} - {{currency[currTitle]}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

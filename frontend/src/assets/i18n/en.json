@@ -1,0 +1,69 @@
+{
+    "HEADER": {
+        "EXCHANGE_RATES": "Exchange rates",
+        "MAIN": "Main",
+        "ALL_RATES": "All Rates",
+        "CONVERTER": "Converter"
+    },
+    "SETTINGS": {
+        "CHOOSE_LANGUAGE": {
+            "TITLE": "Choose language:",
+            "ENGLISH": "EN - English",
+            "UKRAINIAN": "UA - Ukrainian",
+            "RUSSIAN": "RU - Russian"
+        },
+        "CHOOSE_CURRENCIES": "Choose currencies for main page:"
+    },
+    "MAIN": {
+        "GO_TO_GRAPH": "Go to fluctuation graph",
+        "BANKS_RATES": "Banks' exchange rates in Ukraine",
+        "BANK": "Bank",
+        "PURCHASE": "Purchase",
+        "SALE": "Sale",
+        "OTHER_RATES": "Exchange rates from other websites",
+        "WEBSITE": "Website",
+        "RATE": "Rate",
+        "RATE_FORECAST": "Currency rate forecast",
+        "FORECAST_PERIOD": "Forecast period",
+        "NONE": "None",
+        "LOADING": "Please, wait, forecasting may take up to several minutes..."
+    },
+    "CONVERTER": {
+        "TITLE": "Convert Ukrainian Hryvnia (NBU rate)",
+        "AMOUNT": "Amount",
+        "FROM": "From",
+        "TO": "To"
+    },
+    "ALL_RATES": {
+        "CHOOSE_DATE": "Choose a date",
+        "GO_TODAY": "Go today",
+        "CURRENCY": "Currency",
+        "PURCHASE": "Purchase",
+        "SALE": "Sale"
+    },
+    "DETAILS": {
+        "DATE_RANGE": "Enter a date range",
+        "START_DATE": "Start date",
+        "END_DATE": "End date",
+        "NO_DATA": "No data for chart"
+    },
+    "BANKS": {
+        "PRIVAT": "PrivatBank",
+        "MONO": "Monobank"
+    },
+    "WEBSITES": {
+        "NBU": "NBU",
+        "CURRENCY_LAYER": "Currency Layer",
+        "FIXER": "Fixer"
+    },
+    "RATES": {
+        "PURCHASE": "purchase",
+        "SALE": "sale",
+        "RATE": "rate",
+        "FORECAST": "Forecast"
+    },
+    "FOOTER": {
+        "AUTHOR": "Kateryna Boiko"
+    },
+    "ERROR": "Error"
+}

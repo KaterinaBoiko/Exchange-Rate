@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../../shared/classes/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: User;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  activeRoute(route: string): boolean {
+    return this.router.url.indexOf(route) !== -1;
   }
 
   logout(): void {

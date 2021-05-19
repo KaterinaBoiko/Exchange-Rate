@@ -23,9 +23,9 @@ class ARIMAC:
         p = range(5, 12)
         q = range(5, 12)
         d = range(0, 2)
-        # p = range(5, 10)
-        # d = range(0, 2)
-        # q = range(4, 7)
+        # p = range(9, 10)
+        # d = range(0, 1)
+        # q = range(6, 7)
         pdq = list(itertools.product(p, d, q))
         params_ = pd.DataFrame()
         for param in pdq:
@@ -42,6 +42,7 @@ class ARIMAC:
                 params_ = pd.concat([params, params_])
             except:
                 continue
+        print(params_)
         best_params = params_[params_['rmse'] ==
                               params_['rmse'].min()]['params'][0]
         self.order = tuple(map(int, re.findall(r'[0-9]+', best_params)))

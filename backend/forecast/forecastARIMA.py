@@ -17,6 +17,7 @@ def forecast(currency='USD', period=5):
 
     arima = ARIMAC(data, None, None, 'rate_nb')
     arima.order = arima_params
+    print(arima_params)
 
     rng = pd.date_range(str(date.today() + timedelta(days=1)),
                         periods=period, freq='D')

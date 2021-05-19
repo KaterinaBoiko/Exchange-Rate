@@ -1,20 +1,11 @@
 <div class="space-between align-center">
     <div class="menu">
         <div class="logo" routerLink="/main">
-            <mat-icon>trending_up</mat-icon>Exchange rates
+            <mat-icon>trending_up</mat-icon>{{ 'HEADER.EXCHANGE_RATES' | translate }}
         </div>
-        <a routerLink="/main">Main</a>
-        <a routerLink="/rates">All Rates</a>
-        <a routerLink="/converter">Converter</a>
+        <a routerLink="/main" [class.active]="activeRoute('main')">{{ 'HEADER.MAIN' | translate }}</a>
+        <a routerLink="/rates" [class.active]="activeRoute('rates')">{{ 'HEADER.ALL_RATES' | translate }}</a>
+        <a routerLink="/converter" [class.active]="activeRoute('converter')">{{ 'HEADER.CONVERTER' | translate }}</a>
     </div>
     <mat-icon class="settings" routerLink="/settings">settings</mat-icon>
 </div>
-
-<mat-menu #userMenu="matMenu" xPosition="before">
-    <button mat-menu-item routerLink="/profile">
-        <mat-icon>person</mat-icon>Profile
-    </button>
-    <button mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon>Logout
-    </button>
-</mat-menu>

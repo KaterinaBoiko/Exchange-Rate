@@ -31,8 +31,8 @@ def train(currency='USD'):
     conn.commit()
     cursor.close()
 
-    # plt.figure(figsize=(14, 5))
-    # plt.plot(data['date'], data['rate_nb'])
-    # plt.plot(results['date'], results['predicted'])
-    # plt.plot(results['date'], results['rate_nb'])
-    # plt.show()
+    plt.figure(figsize=(14, 5))
+    plt.plot(data['date'], data['rate_nb'])
+    plt.plot(results['date'], results['predicted'])
+    plt.plot(results['date'], results['rate_nb'])
+    plt.show()

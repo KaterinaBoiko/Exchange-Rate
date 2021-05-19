@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -28,11 +29,13 @@ export class CurrencyDetailsComponent implements OnInit {
   startDate: Date = localStorage.getItem('startDate') ? new Date(localStorage.getItem('startDate')) : new Date();
   endDate: Date = localStorage.getItem('endDate') ? new Date(localStorage.getItem('endDate')) : new Date();
   maxDate: Date = new Date();
+  currTitle: string;
 
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private rateService: RateService
+    private rateService: RateService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +44,7 @@ export class CurrencyDetailsComponent implements OnInit {
       this.startDate.setMonth(this.startDate.getMonth() - 4);
     }
     this.getCurrencyDetails();
+    this.currTitle = `${this.translateService.currentLang}_title`;
   }
 
   ngOnDestroy() {
@@ -78,13 +82,13 @@ export class CurrencyDetailsComponent implements OnInit {
 
   setChartDetails(): void {
     let datasets = [
-      { label: 'NBU rate', data: [], fill: false },
-      { label: 'PrivatBank purchase', data: [], fill: false },
-      { label: 'PrivatBank sale', data: [], fill: false },
-      { label: 'Mono purchase', data: [], fill: false },
-      { label: 'Mono sale', data: [], fill: false },
-      { label: 'Currency Layer rate', data: [], fill: false },
-      { label: 'Fixer rate', data: [], fill: false },
+      { label: `${this.translateService.instant('WEBSITES.NBU')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('BANKS.PRIVAT')} ${this.translateService.instant('RATES.PURCHASE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('BANKS.PRIVAT')} ${this.translateService.instant('RATES.SALE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('BANKS.MONO')} ${this.translateService.instant('RATES.PURCHASE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('BANKS.MONO')} ${this.translateService.instant('RATES.SALE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('WEBSITES.CURRENCY_LAYER')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
+      { label: `${this.translateService.instant('WEBSITES.FIXER')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
     ];
     const labels = [];
     this.details.forEach(row => {
@@ -143,7 +147,7 @@ export class CurrencyDetailsComponent implements OnInit {
   }
 
   showError(error: string) {
-    this.toastr.error(error, 'Error');
+    this.toastr.error(error, this.translateService.instant('ERROR'));
   }
 
 }

@@ -1,20 +1,30 @@
 export const CHART_COLORS = [
     {
-        backgroundColor: "rgba(17,119,99,0.6)",
-        borderColor: "rgba(17,119,99,1)",
-        pointBackgroundColor: "rgba(17,119,99,1)",
-        pointBorderColor: "#fff",
+        borderColor: '#117763',
+        pointBorderColor: '#fff'
     },
     {
-        backgroundColor: "rgba(26,179,148,0.5)",
-        borderColor: "rgba(26,179,148,1)",
-        pointBackgroundColor: "rgba(26,179,148,1)",
-        pointBorderColor: "#fff",
+        borderColor: '#b3bcc7',
+        pointBorderColor: '#fff'
     },
     {
-        backgroundColor: "rgba(220,220,220,0.5)",
-        borderColor: "rgba(220,220,220,1)",
-        pointBackgroundColor: "rgba(220,220,220,1)",
-        pointBorderColor: "#fff",
+        borderColor: '#546882',
+        pointBorderColor: '#fff'
+    },
+    {
+        borderColor: '#9aa5a1',
+        pointBorderColor: '#fff'
+    },
+    {
+        borderColor: '#5d6f69',
+        pointBorderColor: '#fff'
+    },
+    {
+        borderColor: '#a2a0b9',
+        pointBorderColor: '#fff'
+    },
+    {
+        borderColor: '#575482',
+        pointBorderColor: '#fff'
     }
 ];

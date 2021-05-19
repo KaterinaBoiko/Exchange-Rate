@@ -32,6 +32,11 @@
     font-size: 14px;
 }
 
+.menu a:hover,
+.active {
+    text-decoration: underline !important;
+}
+
 .settings {
     color: white;
     cursor: pointer;

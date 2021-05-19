@@ -1,8 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from furl import furl
-import sys
 import json
-import subprocess
 
 
 class Server(BaseHTTPRequestHandler):
@@ -12,6 +10,7 @@ class Server(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        print('do get')
         f = furl(self.path)
         self._set_headers()
         if(self.path.find("train") != -1):
@@ -35,5 +34,5 @@ class Server(BaseHTTPRequestHandler):
 server_address = ('', 8080)
 httpd = HTTPServer(server_address, Server)
 
-print('Listening at http://127.0.0.1:8000', flush=True)
+print('Listening at http://127.0.0.1:8080', flush=True)
 httpd.serve_forever()

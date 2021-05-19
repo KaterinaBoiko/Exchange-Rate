@@ -1,7 +1,7 @@
 const axios = require('axios');
 const formatDate = require('dateformat');
 const { sql } = require('../database/connection');
-const forecastServer = 'http://127.0.0.1:8000';
+const forecastServer = 'http://127.0.0.1:8080';
 
 exports.getRateByDate = (req, res) => {
     const { date } = req.params;
@@ -41,17 +41,22 @@ exports.convert = (req, res) => {
 };
 
 exports.getCurrencyPairs = (req, res) => {
-    sql.query(`select pairs.base_currency, pairs.currency, ` +
-        `(select title from currencies where code = pairs.currency) currency_title, ` +
-        `(select title from currencies where code = pairs.base_currency) base_currency_title from currency_pairs pairs`, (err, data) => {
-            if (err)
-                return res(err.routine);
-            return res(null, data.rows);
-        });
+    sql.query(`select pairs.base_currency, pairs.currency, 
+        (select en_title from currencies where code = pairs.currency) en_title, 
+        (select en_title from currencies where code = pairs.base_currency) en_base_title,
+        (select ua_title from currencies where code = pairs.currency) ua_title, 
+        (select ua_title from currencies where code = pairs.base_currency) ua_base_title,
+        (select ru_title from currencies where code = pairs.currency) ru_title, 
+        (select ru_title from currencies where code = pairs.base_currency) ru_base_title
+        from currency_pairs pairs`, (err, data) => {
+        if (err)
+            return res(err.routine);
+        return res(null, data.rows);
+    });
 };
 
 exports.getCurrencies = (req, res) => {
-    sql.query(`select p.currency, c.title from currency_pairs p left join currencies c on p.currency = c.code where currency <> 'UAH'`, (err, data) => {
+    sql.query(`select p.currency, c.en_title, c.ua_title, c.ru_title from currency_pairs p left join currencies c on p.currency = c.code where currency <> 'UAH'`, (err, data) => {
         if (err)
             return res(err.routine);
         return res(null, data.rows);
@@ -78,6 +83,11 @@ exports.getCurrencyDetailsByDate = (req, res) => {
             return res(err.routine);
 
         const response = {
+            currencyData: {
+                en_title: data.rows[0].en_title,
+                ua_title: data.rows[0].ua_title,
+                ru_title: data.rows[0].ru_title
+            },
             bankData: composeBankData(data.rows[0]),
             otherData: [
                 {
@@ -98,6 +108,18 @@ exports.getCurrencyDetailsByDate = (req, res) => {
     });
 };
 
+exports.getNBURate = (req, res) => {
+    const { currency } = req.params;
+    const { from, to } = getFormatedtFromToDates(req, 1);
+    sql.query(`select date, rate_nb from exchange_rates where currency_pair_id = (select id from currency_pairs where base_currency = 'UAH' and currency = '${currency}') and date >= '${from}' and date <= '${to}'`, (err, data) => {
+        if (err)
+            return res(err.routine);
+
+        return res(null, data.rows);
+    });
+
+};
+
 exports.forecastRate = (req, res) => {
     axios.get(`${forecastServer}`, {
         params: {
@@ -115,7 +137,7 @@ exports.forecastRate = (req, res) => {
             res(null, forecast);
         })
         .catch(err => {
-            res(err.response);
+            res(err.response || err.code);
         });
 };
 
@@ -152,7 +174,7 @@ function composeBankData(details) {
     ];
 }
 
-function getFormatedtFromToDates(req) {
+function getFormatedtFromToDates(req, minusMonth = 4) {
     let { from, to } = req.query;
 
     if (!to) {
@@ -161,7 +183,7 @@ function getFormatedtFromToDates(req) {
 
     if (!from) {
         from = new Date(to);
-        from.setMonth(from.getMonth() - 4);
+        from.setMonth(from.getMonth() - minusMonth);
     }
 
     if (new Date(from) > new Date(to)) {

@@ -1,0 +1,69 @@
+{
+    "HEADER": {
+        "EXCHANGE_RATES": "Обмін валют",
+        "MAIN": "Головна",
+        "ALL_RATES": "Усі валюти",
+        "CONVERTER": "Конвертер"
+    },
+    "SETTINGS": {
+        "CHOOSE_LANGUAGE": {
+            "TITLE": "Оберіть мову сайту:",
+            "ENGLISH": "EN - Англійська",
+            "UKRAINIAN": "UA - Українська",
+            "RUSSIAN": "RU - Російська"
+        },
+        "CHOOSE_CURRENCIES": "Оберіть валюти для відобржаення на головній сторінці:"
+    },
+    "MAIN": {
+        "GO_TO_GRAPH": "Графік флуктуацій",
+        "BANKS_RATES": "Курси в банках України",
+        "BANK": "Банк",
+        "PURCHASE": "Покупка",
+        "SALE": "Продаж",
+        "OTHER_RATES": "Курс валют з інших сайтів",
+        "WEBSITE": "Сайт",
+        "RATE": "Курс",
+        "RATE_FORECAST": "Прогноз курсу валют",
+        "FORECAST_PERIOD": "Період прогнозу",
+        "NONE": "Без прогнозу",
+        "LOADING": "Будь ласка, зачекайте, прогноз може зайняти декільки хвилин..."
+    },
+    "CONVERTER": {
+        "TITLE": "Конвертувати україську гривню (курс НБУ)",
+        "AMOUNT": "Кількість",
+        "FROM": "Від",
+        "TO": "До"
+    },
+    "ALL_RATES": {
+        "CHOOSE_DATE": "Оберіть дату",
+        "GO_TODAY": "Сьогодні",
+        "CURRENCY": "Валюта",
+        "PURCHASE": "Покупка",
+        "SALE": "Продаж"
+    },
+    "DETAILS": {
+        "DATE_RANGE": "Оберіть проміжок",
+        "START_DATE": "Початок",
+        "END_DATE": "Кінець",
+        "NO_DATA": "Немає даних для графіку"
+    },
+    "BANKS": {
+        "PRIVAT": "ПриватБанк",
+        "MONO": "Монобанк"
+    },
+    "WEBSITES": {
+        "NBU": "НБУ",
+        "CURRENCY_LAYER": "Currency Layer",
+        "FIXER": "Fixer"
+    },
+    "RATES": {
+        "PURCHASE": "покупка",
+        "SALE": "продаж",
+        "RATE": "курс",
+        "FORECAST": "прогноз"
+    },
+    "FOOTER": {
+        "AUTHOR": "Катерина Бойко"
+    },
+    "ERROR": "Помилка"
+}
