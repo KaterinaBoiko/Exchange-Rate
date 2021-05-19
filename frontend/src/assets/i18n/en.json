@@ -59,7 +59,6 @@
     "RATES": {
         "PURCHASE": "purchase",
         "SALE": "sale",
-        "RATE": "rate",
         "FORECAST": "Forecast"
     },
     "FOOTER": {

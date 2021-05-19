@@ -120,7 +120,7 @@ export class MainComponent implements OnInit {
   setChartData(forecast?: any): void {
     this.chartDetails = null;
     const datasets = [
-      { label: `${this.translateService.instant('WEBSITES.NBU')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false }
+      { label: this.translateService.instant('WEBSITES.NBU'), data: [], fill: false }
     ];
     const labels = [];
     this.baseRates.forEach(row => {

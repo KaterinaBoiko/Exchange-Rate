@@ -59,7 +59,6 @@
     "RATES": {
         "PURCHASE": "покупка",
         "SALE": "продаж",
-        "RATE": "курс",
         "FORECAST": "прогноз"
     },
     "FOOTER": {

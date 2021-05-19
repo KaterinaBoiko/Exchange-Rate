@@ -82,13 +82,13 @@ export class CurrencyDetailsComponent implements OnInit {
 
   setChartDetails(): void {
     let datasets = [
-      { label: `${this.translateService.instant('WEBSITES.NBU')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
+      { label: this.translateService.instant('WEBSITES.NBU'), data: [], fill: false },
       { label: `${this.translateService.instant('BANKS.PRIVAT')} ${this.translateService.instant('RATES.PURCHASE')}`, data: [], fill: false },
       { label: `${this.translateService.instant('BANKS.PRIVAT')} ${this.translateService.instant('RATES.SALE')}`, data: [], fill: false },
       { label: `${this.translateService.instant('BANKS.MONO')} ${this.translateService.instant('RATES.PURCHASE')}`, data: [], fill: false },
       { label: `${this.translateService.instant('BANKS.MONO')} ${this.translateService.instant('RATES.SALE')}`, data: [], fill: false },
-      { label: `${this.translateService.instant('WEBSITES.CURRENCY_LAYER')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
-      { label: `${this.translateService.instant('WEBSITES.FIXER')} ${this.translateService.instant('RATES.RATE')}`, data: [], fill: false },
+      { label: this.translateService.instant('WEBSITES.CURRENCY_LAYER'), data: [], fill: false },
+      { label: this.translateService.instant('WEBSITES.FIXER'), data: [], fill: false },
     ];
     const labels = [];
     this.details.forEach(row => {
