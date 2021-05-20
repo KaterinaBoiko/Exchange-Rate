@@ -59,7 +59,10 @@
     "RATES": {
         "PURCHASE": "purchase",
         "SALE": "sale",
-        "FORECAST": "Forecast"
+        "FORECAST": "Forecast",
+        "MINIMUM": "Minimum",
+        "AVERAGE": "Average",
+        "MAXIMUM": "Maximum"
     },
     "FOOTER": {
         "AUTHOR": "Kateryna Boiko"

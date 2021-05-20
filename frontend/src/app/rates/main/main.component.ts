@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { formatDate } from "@angular/common";
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -16,8 +17,9 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
   private unsubscribe = new Subject<void>();
+  @ViewChild(MatSort) sort: MatSort;
 
   currencies: string[];
   currentCurrency: { code: string, data: any; } = { code: null, data: null };
@@ -25,6 +27,7 @@ export class MainComponent implements OnInit {
   showLoader: boolean = false;
   isCurrentDateToday: boolean = true;
   bankDataSource: MatTableDataSource<any> = new MatTableDataSource();
+  analyzedDataSource: MatTableDataSource<any> = new MatTableDataSource();
   otherDataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   chartDetails: ChartConfigs;
@@ -48,6 +51,10 @@ export class MainComponent implements OnInit {
     this.currTitle = `${this.translateService.currentLang}_title`;
   }
 
+  ngAfterViewInit() {
+    this.bankDataSource.sort = this.sort;
+  }
+
   selectCurrency(code: string): void {
     this.currentCurrency.code = code;
     this.currentCurrency.data = null;
@@ -62,8 +69,9 @@ export class MainComponent implements OnInit {
       .subscribe(
         data => {
           this.currentCurrency.data = data;
-          this.bankDataSource = this.currentCurrency.data.bankData;
-          this.otherDataSource = this.currentCurrency.data.otherData;
+          this.bankDataSource.data = this.currentCurrency.data.bankData;
+          this.analyzedDataSource.data = this.currentCurrency.data.analyzedData;
+          this.otherDataSource.data = this.currentCurrency.data.otherData;
           this.showLoader = false;
         },
         error => {

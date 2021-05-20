@@ -70,6 +70,11 @@
     height: 42px;
 }
 
+.mat-column-purchase,
+.mat-column-sale {
+    width: 25%;
+}
+
 .mat-cell.min {
     border-top: 1px solid rgba(255, 255, 255, 0.72);
 }

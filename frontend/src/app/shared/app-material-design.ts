@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -26,6 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
         MatMenuModule,
         MatProgressBarModule,
         MatTableModule,
+        MatSortModule,
         MatDatepickerModule,
         MatNativeDateModule,
         MatProgressSpinnerModule,
@@ -33,7 +35,7 @@ import { MatRadioModule } from '@angular/material/radio';
         MatPaginatorModule,
         MatListModule,
         MatExpansionModule,
-        MatRadioModule
+        MatRadioModule,
     ]
 })
 

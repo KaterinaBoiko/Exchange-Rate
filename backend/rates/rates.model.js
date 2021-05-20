@@ -82,24 +82,26 @@ exports.getCurrencyDetailsByDate = (req, res) => {
         if (err)
             return res(err.routine);
 
+        const splittedData = composeBankData(data.rows[0]);
         const response = {
             currencyData: {
                 en_title: data.rows[0].en_title,
                 ua_title: data.rows[0].ua_title,
                 ru_title: data.rows[0].ru_title
             },
-            bankData: composeBankData(data.rows[0]),
+            bankData: splittedData[0],
+            analyzedData: splittedData[1],
             otherData: [
                 {
-                    apiName: 'NBU',
+                    apiName: 'nbu',
                     rate: data.rows[0].rate_nb
                 },
                 {
-                    apiName: 'Currency Layer',
+                    apiName: 'currency_layer',
                     rate: data.rows[0].layer_rate
                 },
                 {
-                    apiName: 'Fixer',
+                    apiName: 'fixer',
                     rate: data.rows[0].fixer_rate
                 }
             ]
@@ -144,34 +146,34 @@ exports.forecastRate = (req, res) => {
 function composeBankData(details) {
     const bankData = [
         {
-            bank: 'PrivatBank',
+            bank: 'privat',
             purchase: details.purchase_privat,
             sale: details.sale_privat
         },
         {
-            bank: 'Monobank',
+            bank: 'mono',
             purchase: details.purchase_mono,
             sale: details.sale_mono
         },
     ];
-    return [
-        ...bankData,
+    const analyzedData = [
         {
-            bank: 'Minimum',
+            title: 'minimum',
             purchase: bankData.reduce((min, rate) => rate.purchase && rate.purchase < min ? rate.purchase : min, bankData.find(rate => rate.purchase).purchase),
             sale: bankData.reduce((min, rate) => rate.sale && rate.sale < min ? rate.sale : min, bankData.find(rate => rate.sale).sale)
         },
         {
-            bank: 'Average',
+            title: 'average',
             purchase: bankData.reduce((total, next) => total + next.purchase, 0) / bankData.filter(rate => rate.purchase).length,
             sale: bankData.reduce((total, next) => total + next.sale, 0) / bankData.filter(rate => rate.sale).length
         },
         {
-            bank: 'Maximum',
+            title: 'maximum',
             purchase: bankData.reduce((max, rate) => rate.purchase && rate.purchase > max ? rate.purchase : max, bankData.find(rate => rate.purchase).purchase),
             sale: bankData.reduce((max, rate) => rate.sale && rate.sale > max ? rate.sale : max, bankData.find(rate => rate.sale).sale)
         }
     ];
+    return [bankData, analyzedData];
 }
 
 function getFormatedtFromToDates(req, minusMonth = 4) {

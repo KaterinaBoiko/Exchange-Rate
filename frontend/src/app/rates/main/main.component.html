@@ -17,24 +17,43 @@
     <div class="tables space-between">
         <div class="bank-details">
             <p class="table-title">{{ 'MAIN.BANKS_RATES' | translate }}</p>
-            <table mat-table [dataSource]="bankDataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="bankDataSource" class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="bank">
-                    <th mat-header-cell *matHeaderCellDef> {{ 'MAIN.BANK' | translate }} </th>
-                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{ element.bank }}
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'MAIN.BANK' | translate }} </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ 'BANKS.' + element.bank.toUpperCase() | translate}}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="purchase">
-                    <th mat-header-cell *matHeaderCellDef> {{ 'MAIN.PURCHASE' | translate }} </th>
-                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{
-                        (element.purchase | number:'0.1-2') || '-' }} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'MAIN.PURCHASE' | translate }} </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ (element.purchase | number:'0.2-2') || '-' }}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="sale">
-                    <th mat-header-cell *matHeaderCellDef> {{ 'MAIN.SALE' | translate }} </th>
-                    <td mat-cell *matCellDef="let element" [class.min]="element.bank === 'Minimum'"> {{ (element.sale |
-                        number:'0.1-2') || '-' }} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'MAIN.SALE' | translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ (element.sale |
+                        number:'0.2-2') || '-' }} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="['bank', 'purchase', 'sale']"></tr>
                 <tr mat-row *matRowDef="let row; columns: ['bank', 'purchase', 'sale']">
+                </tr>
+            </table>
+            <table mat-table [dataSource]="analyzedDataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="title">
+                    <td mat-cell *matCellDef="let element" [class.min]="element.title === 'minimum'">
+                        {{ 'RATES.' + element.title.toUpperCase() | translate}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="purchase">
+                    <td mat-cell *matCellDef="let element" [class.min]="element.title === 'minimum'"> {{
+                        (element.purchase | number:'0.2-2') || '-' }} </td>
+                </ng-container>
+                <ng-container matColumnDef="sale">
+                    <td mat-cell *matCellDef="let element" [class.min]="element.title === 'minimum'"> {{ (element.sale |
+                        number:'0.2-2') || '-' }} </td>
+                </ng-container>
+                <tr mat-row *matRowDef="let row; columns: ['title', 'purchase', 'sale']">
                 </tr>
             </table>
         </div>
@@ -44,11 +63,13 @@
             <table mat-table [dataSource]="otherDataSource" class="mat-elevation-z8">
                 <ng-container matColumnDef="api">
                     <th mat-header-cell *matHeaderCellDef> {{ 'MAIN.WEBSITE' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.apiName }} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{ 'WEBSITES.' + element.apiName.toUpperCase() | translate}}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
                     <th mat-header-cell *matHeaderCellDef> {{ 'MAIN.RATE' | translate }} </th>
-                    <td mat-cell *matCellDef="let element"> {{ (element.rate | number:'0.1-2') || '-' }} </td>
+                    <td mat-cell *matCellDef="let element"> {{ (element.rate | number:'0.2-2') || '-' }} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="['api', 'rate']"></tr>
                 <tr mat-row *matRowDef="let row; columns: ['api', 'rate']">

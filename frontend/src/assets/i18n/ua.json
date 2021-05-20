@@ -59,7 +59,10 @@
     "RATES": {
         "PURCHASE": "покупка",
         "SALE": "продаж",
-        "FORECAST": "прогноз"
+        "FORECAST": "Прогноз",
+        "MINIMUM": "Мінімум",
+        "AVERAGE": "Середнє",
+        "MAXIMUM": "Максимум"
     },
     "FOOTER": {
         "AUTHOR": "Катерина Бойко"
